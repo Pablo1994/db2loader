@@ -22,20 +22,21 @@ public abstract class Gestor {
     protected String puerto;
     protected String url;
 
-    public Gestor(String database,String puerto, String user, String password, String host, String url) {
+    public Gestor(String database, String puerto, String user, String password, String host, String url) {
         this.database = database;
         this.user = user;
         this.password = password;
         this.host = host;
-        this.puerto=puerto;
-        this.url=url;
+        this.puerto = puerto;
+        this.url = url;
     }
 
     public ResultSet execute(String query) {
         try {
             resultSet = statement.executeQuery(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.err.println(ex);
+//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultSet;
     }
@@ -48,6 +49,27 @@ public abstract class Gestor {
             return -1;
         }
 
+    }
+
+    public void commit() {
+        try {
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void close(boolean commit) {
+        try {
+            if (commit) {
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     abstract protected void getConnection() throws Exception;
