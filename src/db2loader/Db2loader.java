@@ -17,14 +17,14 @@ import javafx.stage.Stage;
  */
 public class Db2loader extends Application {
     
+    public static Stage stage;
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+        this.stage=stage;
         Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     /**

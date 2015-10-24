@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 public class GestorDb2 extends Gestor {
 
+    private static GestorDb2 instancia;
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
 
     public GestorDb2() throws Exception {
@@ -23,13 +24,13 @@ public class GestorDb2 extends Gestor {
 
     @Override
     protected void getConnection() throws Exception {
-        connection = DriverManager.getConnection(url + "//"+host+":" + puerto + "/" + database + ""
+        connection = DriverManager.getConnection(url + "//" + host + ":" + puerto + "/" + database + ""
                 + ":user=" + user + ";password=" + password + ";"
                 + "traceLevel="
                 + (com.ibm.db2.jcc.DB2BaseDataSource.TRACE_ALL) + ";");
         connection.setAutoCommit(false); // set auto-commit false
         statement = (Statement) connection.createStatement();
-        
+
     }
 
     public ResultSet tablasActuales() throws SQLException {
@@ -38,13 +39,20 @@ public class GestorDb2 extends Gestor {
         return prepare.executeQuery();
     }
 
-    public static void main(String[] args) throws Exception {
-        GestorDb2 d = new GestorDb2();
-        ResultSet result = d.tablasActuales();
-        while (result.next()) {
-            System.out.println(result.getString("TABLE_NAME"));
+    public static GestorDb2 getInstancia() throws Exception {
+        if (instancia == null || instancia.connection.isClosed()) {
+            instancia = new GestorDb2();
         }
-        d.close(true);
+        return instancia;
     }
+
+//    public static void main(String[] args) throws Exception {
+//        GestorDb2 d = new GestorDb2();
+//        ResultSet result = d.tablasActuales();
+//        while (result.next()) {
+//            System.out.println(result.getString("TABLE_NAME"));
+//        }
+//        d.close(true);
+//    }
 
 }
