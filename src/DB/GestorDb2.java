@@ -2,7 +2,6 @@ package DB;
 //jdbc:db2://localhost:50000/sample
 
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +12,7 @@ public class GestorDb2 extends Gestor {
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
 
     public GestorDb2() throws Exception {
-        super("sample", "50000", "usuario1", "usuario1", "localhost", "jdbc:db2:");
+        super("sample", "50000", "DB2ADMIN", "manager", "localhost", "jdbc:db2:");
         getConnection();
     }
 

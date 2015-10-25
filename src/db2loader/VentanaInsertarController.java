@@ -8,7 +8,6 @@ package db2loader;
 import DB.Model.Modelo;
 import java.io.File;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ import javafx.stage.FileChooser;
  *
  * @author Josue
  */
-public class FXMLDocumentController implements Initializable {
+public class VentanaInsertarController implements Initializable {
 
     private Modelo modelo;
     private static File _file;
@@ -37,9 +36,10 @@ public class FXMLDocumentController implements Initializable {
     private Button button;
     @FXML
     private ComboBox _comboTablas;
-    @FXML TextField _textRuta;
+    @FXML
+    TextField _textRuta;
 
-    public FXMLDocumentController() throws Exception {
+    public VentanaInsertarController() throws Exception {
         modelo = Modelo.getInstancia();
     }
 
@@ -49,19 +49,18 @@ public class FXMLDocumentController implements Initializable {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(Db2loader.stage);
+        File file = fileChooser.showOpenDialog(programaPrincipal.getStagePrincipal());
     }
 
     @FXML
     private void clickTextAction(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Archivo a Cargar");
-        File nuevo= fileChooser.showOpenDialog(Db2loader.stage);
-        if(nuevo.isFile()){
-        _file=nuevo;
-        _textRuta.setText(_file.getAbsolutePath());
+
+        _file = programaPrincipal.buscarArchivo();
+        if (_file != null) {
+            _textRuta.setText(_file.getAbsolutePath());
+        } else {
+            _textRuta.setText("Ruta sin Especificar");
         }
-        
     }
 
     @Override
@@ -69,7 +68,7 @@ public class FXMLDocumentController implements Initializable {
         try {
             cargarTablas();
         } catch (Exception ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VentanaInsertarController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,4 +81,9 @@ public class FXMLDocumentController implements Initializable {
         _comboTablas.getSelectionModel().select(tablas.get(0));
     }
 
+    public void setProgramaPrincipal(Db2loader programa) {
+        this.programaPrincipal = programa;
+    }
+
+    private Db2loader programaPrincipal;
 }
