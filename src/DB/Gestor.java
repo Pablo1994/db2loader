@@ -32,7 +32,7 @@ public abstract class Gestor {
             resultSet = statement.executeQuery(query);
         } catch (Exception ex) {
             System.err.println(ex);
-//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);  
         }
         return resultSet;
     }
