@@ -41,6 +41,7 @@ public class Db2loader extends Application {
             Scene scene = new Scene(rootPane);
             stagePrincipal.setTitle("Insertar Datos");
             stagePrincipal.setScene(scene);
+            stagePrincipal.setResizable(false);
             controlInsertar = loader.getController();
             controlInsertar.setProgramaPrincipal(this);
             stagePrincipal.show();

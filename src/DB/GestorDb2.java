@@ -9,11 +9,12 @@ import java.sql.Statement;
 public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
-    private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
+    private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?",
+            _getTableAtributtes = "SELECT DISTINCT(NAME), COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = ?";
     private String resultadoConexion;
 
     public GestorDb2() throws Exception {
-        super("sample", "50000", "DB2ADMIN", "manager", "localhost", "jdbc:db2:");
+        super("sample", "50000", "usuario1", "usuario1", "localhost", "jdbc:db2:");
         getConnection();
     }
 
@@ -54,6 +55,12 @@ public class GestorDb2 extends Gestor {
     public ResultSet tablasActuales() throws SQLException {
         prepare = connection.prepareStatement(_getTables);
         prepare.setString(1, user.toUpperCase());
+        return prepare.executeQuery();
+    }
+
+    public ResultSet tablaAtributos(String tabla) throws SQLException {
+        prepare = connection.prepareStatement(_getTableAtributtes);
+        prepare.setString(1, tabla.toUpperCase());
         return prepare.executeQuery();
     }
 
