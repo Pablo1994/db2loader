@@ -9,10 +9,11 @@ import java.sql.Statement;
 public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
-    private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
+    private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?",
+            _getTableAtributtes = "SELECT DISTINCT(NAME), COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = ?";
 
     public GestorDb2() throws Exception {
-        super("sample", "50000", "DB2ADMIN", "manager", "localhost", "jdbc:db2:");
+        super("sample", "50000", "db2admin", "manager", "localhost", "jdbc:db2:");
         getConnection();
     }
 
@@ -30,7 +31,7 @@ public class GestorDb2 extends Gestor {
     }
 
     public boolean conexion() {
-      return  getConnection();
+        return getConnection();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class GestorDb2 extends Gestor {
             statement = (Statement) connection.createStatement();
             return true;
         } catch (Exception e) {
-          return false;
+            return false;
         }
 
     }
@@ -55,14 +56,18 @@ public class GestorDb2 extends Gestor {
         return prepare.executeQuery();
     }
 
+    public ResultSet tablaAtributos(String tabla) throws SQLException {
+        prepare = connection.prepareStatement(_getTableAtributtes);
+        prepare.setString(1, tabla.toUpperCase());
+        return prepare.executeQuery();
+    }
+
     public static GestorDb2 getInstancia() throws Exception {
         if (instancia == null || instancia.connection.isClosed()) {
             instancia = new GestorDb2();
         }
         return instancia;
     }
-
-
 
 //    public static void main(String[] args) throws Exception {
 //        GestorDb2 d = new GestorDb2();

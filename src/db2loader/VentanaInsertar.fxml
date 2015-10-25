@@ -4,9 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController">
+<AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController">
     <children>
         <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="631.0" layoutY="494.0" onAction="#cargarArchivo" text="Cargar Datos" />
+
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
         <AnchorPane layoutY="2.0">
             <children>
@@ -39,7 +40,7 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <Pane layoutX="14.0" layoutY="46.0" prefHeight="307.0" prefWidth="572.0">
+        <Pane layoutX="-17.0" layoutY="33.0" prefHeight="467.0" prefWidth="691.0">
             <children>
                 <Pane layoutX="46.0" layoutY="23.0" prefHeight="71.0" prefWidth="361.0">
                     <children>
@@ -47,19 +48,27 @@
                         <ComboBox id="_comboTablas" fx:id="_comboTablas" layoutX="115.0" layoutY="23.0" prefWidth="150.0" />
                     </children>
                 </Pane>
-                <Pane layoutX="46.0" layoutY="103.0" prefHeight="71.0" prefWidth="361.0">
+                <Pane layoutX="37.0" layoutY="234.0" prefHeight="71.0" prefWidth="361.0">
                     <children>
                         <Label layoutX="34.0" layoutY="27.0" text="Archivo" />
                         <TextField id="_textRuta" fx:id="_textRuta" editable="false" layoutX="116.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" promptText="Ruta del Archivo" />
                         <Button fx:id="_buttomBuscar" layoutX="282.0" layoutY="23.0" mnemonicParsing="false" onAction="#clickTextAction" text="Buscar" />
                     </children>
                 </Pane>
-                <Pane layoutX="54.0" layoutY="174.0" prefHeight="71.0" prefWidth="367.0">
+                <Pane layoutX="43.0" layoutY="330.0" prefHeight="71.0" prefWidth="367.0">
                     <children>
                         <Label layoutX="14.0" layoutY="27.0" text="Separador" />
-                        <TextField layoutX="105.0" layoutY="23.0" prefHeight="25.0" prefWidth="86.0" promptText="Como , * ..." />
+                        <TextField layoutX="105.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" promptText="Como , * ..." />
                     </children>
                 </Pane>
+                <!-- <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="591.0" layoutY="428.0" onAction="#handleButtonAction" text="Cargar Datos" />
+                -->
+                <TableView layoutX="59.0" layoutY="109.0" prefHeight="108.0" prefWidth="318.0">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Atributo" />
+                        <TableColumn prefWidth="75.0" text="Tipo" />
+                    </columns>
+                </TableView>
             </children>
         </Pane>
     </children>
