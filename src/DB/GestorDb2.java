@@ -10,6 +10,7 @@ public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
+    private String resultadoConexion;
 
     public GestorDb2() throws Exception {
         super("sample", "50000", "DB2ADMIN", "manager", "localhost", "jdbc:db2:");
@@ -21,14 +22,32 @@ public class GestorDb2 extends Gestor {
         getConnection();
     }
 
+    public void actualizar(String db, String pt, String usuario, String clave, String h) throws Exception {
+        getInstancia().database = db;
+        getInstancia().puerto = pt;
+        getInstancia().user = usuario;
+        getInstancia().password = clave;
+        getInstancia().host = h;
+    }
+
+    public void conexion() {
+        getConnection();
+    }
+
     @Override
-    protected void getConnection() throws Exception {
-        connection = DriverManager.getConnection(url + "//" + host + ":" + puerto + "/" + database + ""
-                + ":user=" + user + ";password=" + password + ";"
-                + "traceLevel="
-                + (com.ibm.db2.jcc.DB2BaseDataSource.TRACE_ALL) + ";");
-        connection.setAutoCommit(false); // set auto-commit false
-        statement = (Statement) connection.createStatement();
+    protected void getConnection() {
+        try {
+            connection = DriverManager.getConnection(url + "//" + host + ":" + puerto + "/" + database + ""
+                    + ":user=" + user + ";password=" + password + ";"
+                    + "traceLevel="
+                    + (com.ibm.db2.jcc.DB2BaseDataSource.TRACE_ALL) + ";");
+            connection.setAutoCommit(false); // set auto-commit false
+            statement = (Statement) connection.createStatement();
+            resultadoConexion = "Conexion Exitosa";
+        } catch (Exception e) {
+            resultadoConexion = "Error de Conexion";
+            System.err.println("Hubo un error de conexion");
+        }
 
     }
 
@@ -45,6 +64,10 @@ public class GestorDb2 extends Gestor {
         return instancia;
     }
 
+    public String getResultadoConexion() {
+        return resultadoConexion;
+    }
+
 //    public static void main(String[] args) throws Exception {
 //        GestorDb2 d = new GestorDb2();
 //        ResultSet result = d.tablasActuales();
@@ -53,5 +76,4 @@ public class GestorDb2 extends Gestor {
 //        }
 //        d.close(true);
 //    }
-
 }
