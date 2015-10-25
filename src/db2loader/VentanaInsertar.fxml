@@ -6,7 +6,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController">
     <children>
-        <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="631.0" layoutY="494.0" onAction="#handleButtonAction" text="Cargar Datos" />
+        <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="631.0" layoutY="494.0" onAction="#cargarArchivo" text="Cargar Datos" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
         <AnchorPane layoutY="2.0">
             <children>

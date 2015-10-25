@@ -1,4 +1,3 @@
-
 package db2loader;
 
 import DB.Model.Modelo;
@@ -23,7 +22,7 @@ import javafx.stage.FileChooser;
  */
 public class VentanaInsertarController implements Initializable {
 
-    private Modelo modelo;
+    private final Modelo modelo;
     private static File _file;
 
     @FXML
@@ -79,6 +78,17 @@ public class VentanaInsertarController implements Initializable {
 
     public void setProgramaPrincipal(Db2loader programa) {
         this.programaPrincipal = programa;
+    }
+
+    @FXML
+    public void cargarArchivo() {
+        System.out.println("Cargando Datos de Archivo");
+        /*
+         //carga el archivo
+         if (_file!=null) {
+         modelo.cargarArchivo(_file);
+         }
+         */
     }
 
     private Db2loader programaPrincipal;

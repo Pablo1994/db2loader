@@ -1,6 +1,8 @@
 package DB.Model;
 
 import DB.GestorDb2;
+import archivo.ArchivoEntrada;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,12 +13,14 @@ public class Modelo {
     private static Modelo instancia;
     private GestorDb2 _gestor;
     private ResultSet _consulta;
+    private  ArchivoEntrada archivo;
 
     public static Modelo getInstancia() throws Exception {
         if (instancia == null) {
             instancia = new Modelo();
         }
         instancia._gestor = GestorDb2.getInstancia();
+        instancia.archivo= new ArchivoEntrada();
         return instancia;
     }
 
@@ -33,14 +37,19 @@ public class Modelo {
         try {
             //actualiza los parametros de conexion a la BD
             _gestor.actualizar(db, pt, usuario, clave, h);
-            //intenta conectarse a la BD
-            _gestor.conexion();
+
         } catch (Exception e) {
         }
     }
-    
-    public String resultado(){
-      return  _gestor.getResultadoConexion();
+
+    //intenta conectarse a la BD
+    public boolean conexion() {
+        return _gestor.conexion();
+    }
+
+    public void cargarArchivo(File arch) {
+        archivo.cargarArchivoTexto(arch);
+        System.out.println(archivo.mostarArchivoTexto());
     }
 
 }

@@ -10,7 +10,6 @@ public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?";
-    private String resultadoConexion;
 
     public GestorDb2() throws Exception {
         super("sample", "50000", "DB2ADMIN", "manager", "localhost", "jdbc:db2:");
@@ -30,12 +29,12 @@ public class GestorDb2 extends Gestor {
         getInstancia().host = h;
     }
 
-    public void conexion() {
-        getConnection();
+    public boolean conexion() {
+      return  getConnection();
     }
 
     @Override
-    protected void getConnection() {
+    protected boolean getConnection() {
         try {
             connection = DriverManager.getConnection(url + "//" + host + ":" + puerto + "/" + database + ""
                     + ":user=" + user + ";password=" + password + ";"
@@ -43,10 +42,9 @@ public class GestorDb2 extends Gestor {
                     + (com.ibm.db2.jcc.DB2BaseDataSource.TRACE_ALL) + ";");
             connection.setAutoCommit(false); // set auto-commit false
             statement = (Statement) connection.createStatement();
-            resultadoConexion = "Conexion Exitosa";
+            return true;
         } catch (Exception e) {
-            resultadoConexion = "Error de Conexion";
-            System.err.println("Hubo un error de conexion");
+          return false;
         }
 
     }
@@ -64,9 +62,7 @@ public class GestorDb2 extends Gestor {
         return instancia;
     }
 
-    public String getResultadoConexion() {
-        return resultadoConexion;
-    }
+
 
 //    public static void main(String[] args) throws Exception {
 //        GestorDb2 d = new GestorDb2();

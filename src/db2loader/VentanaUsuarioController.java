@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -13,8 +14,14 @@ public class VentanaUsuarioController implements Initializable {
 
     public VentanaUsuarioController() throws Exception {
         modelo = Modelo.getInstancia();
+        estado = false;
     }
 
+    /*
+     BooleanBinding booleanBind = Bindings.and(text1.textProperty().isEmpty(),
+     text2.textProperty().isEmpty());
+     button.disableProperty().bind(booleanBind);
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -28,13 +35,10 @@ public class VentanaUsuarioController implements Initializable {
 
     @FXML
     public void ventanaInsertar(ActionEvent event) {
-        System.out.println("Crea la  ventana insertar");
-        programaPrincipal.crearVentanaInsertar();
-    }
-
-    @FXML
-    public void aceptar(ActionEvent event) {
-        System.out.println("Aceptar");
+        if (estado == true) {
+            System.out.println("Crea la  ventana insertar");
+            programaPrincipal.crearVentanaInsertar();
+        }
 
     }
 
@@ -51,14 +55,19 @@ public class VentanaUsuarioController implements Initializable {
         puerto = txtPuerto.getText();
         clave = txtPassword.getText();
         modelo.actualizar(base, puerto, usuario, clave, host);
-        System.out.println("Datos:\n" + base + "  " + usuario + "  " + host + "  " + puerto + "  " + clave);
-        labelResult.setText(modelo.resultado());
-        labelResult.setVisible(true);
+        if (modelo.conexion()) {
+            labelResult.setText(" Estado: Conectado");
+            estado = true;
+        } else {
+            labelResult.setText(" Estado: Error Conexion");
+            estado = false;
+        }
 
     }
 
     private Db2loader programaPrincipal;
-    private Modelo modelo;
+    private final Modelo modelo;
+    private boolean estado;
 
     @FXML
     private TextField txtDataB;
@@ -75,5 +84,9 @@ public class VentanaUsuarioController implements Initializable {
 
     @FXML
     private Label labelResult;
+    @FXML
+    private Button btnProbar;
+    @FXML
+    private Button btnAceptar;
 
 }

@@ -72,6 +72,6 @@ public abstract class Gestor {
         }
     }
 
-    abstract protected void getConnection() throws Exception;
+    abstract protected boolean getConnection() throws Exception;
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -65,6 +66,11 @@ public class Db2loader extends Application {
     public Stage getStagePrincipal() {
         return stagePrincipal;
     }
+    
+    public void desabilitarBoton(Button btn){
+       
+    }
+    
 
     public static void main(String[] args) {
         launch(args);
