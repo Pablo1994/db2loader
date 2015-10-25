@@ -1,6 +1,7 @@
 package DB.Model;
 
 import DB.GestorDb2;
+import Logica.Tabla;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,9 +39,18 @@ public class Modelo {
         } catch (Exception e) {
         }
     }
-    
-    public String resultado(){
-      return  _gestor.getResultadoConexion();
+
+    public Tabla builtTabla(String nombre) throws SQLException {
+        Tabla tabla = new Tabla(nombre);
+        _consulta = _gestor.tablaAtributos(nombre);
+        while (_consulta.next()) {
+            tabla.agregarAtributo(_consulta.getString("NAME"), _consulta.getString("COLTYPE"), _consulta.getInt("LENGTH"));
+        }
+        return tabla;
+    }
+
+    public String resultado() {
+        return _gestor.getResultadoConexion();
     }
 
 }

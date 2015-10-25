@@ -29,8 +29,19 @@ public class Tabla {
         this._nombre = _nombre;
     }
 
-    public void agregarAtributo(String _nombre, Tipos _tipo, int tamano) {
-        _atributos.add(new Atributo(_nombre, _tipo, tamano));
+    public Tipos toType(String tipo) {
+        switch (tipo.toUpperCase()) {
+            case "VARCHAR":
+                return Tipos.VARCHAR;
+            case "INTEGER":
+                return Tipos.INTEGER;
+            default:
+                return null;
+        }
+    }
+
+    public void agregarAtributo(String _nombre, String _tipo, int tamano) {
+        _atributos.add(new Atributo(_nombre, toType(_tipo), tamano));
     }
 
 }
