@@ -35,9 +35,12 @@ public class VentanaInsertarController implements Initializable {
     private ComboBox _comboTablas;
     @FXML
     TextField _textRuta;
- 
-    @FXML private TableView tableView;
-    
+    @FXML
+    TextField txtSeparador;
+
+    @FXML
+    private TableView tableView;
+
     public VentanaInsertarController() throws Exception {
         modelo = Modelo.getInstancia();
     }
@@ -52,7 +55,7 @@ public class VentanaInsertarController implements Initializable {
     }
 
     @FXML
-    private void clickTextAction(ActionEvent event) {
+    private void buscarArchivo(ActionEvent event) {
 
         _file = programaPrincipal.buscarArchivo();
         if (_file != null) {
@@ -85,8 +88,6 @@ public class VentanaInsertarController implements Initializable {
     private void cargarAtributos(String nombre) throws SQLException {
 
     }
-    
-    
 
     public void setProgramaPrincipal(Db2loader programa) {
         this.programaPrincipal = programa;
@@ -95,12 +96,19 @@ public class VentanaInsertarController implements Initializable {
     @FXML
     public void cargarArchivo() {
         System.out.println("Cargando Datos de Archivo");
-        /*
+     //   /*
          //carga el archivo
          if (_file!=null) {
          modelo.cargarArchivo(_file);
          }
-         */
+       //  */
+        obtenerSeparador();
+    }
+
+    public void obtenerSeparador() {
+
+        String separador = txtSeparador.getText();
+        System.out.println("Separador: "+ separador);
     }
 
     private Db2loader programaPrincipal;

@@ -50,7 +50,7 @@ public class Modelo {
 
     public void cargarArchivo(File arch) {
         archivo.cargarArchivoTexto(arch);
-        System.out.println(archivo.mostarArchivoTexto());
+//        System.out.println(archivo.mostarArchivoTexto());
     }
 
 
