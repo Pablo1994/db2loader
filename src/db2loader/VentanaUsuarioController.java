@@ -14,14 +14,9 @@ public class VentanaUsuarioController implements Initializable {
 
     public VentanaUsuarioController() throws Exception {
         modelo = Modelo.getInstancia();
-        estado = false;/*********Aqui es FALSE*/
+        estado = false;//-------Aqui es FALSE
     }
 
-    /*
-     BooleanBinding booleanBind = Bindings.and(text1.textProperty().isEmpty(),
-     text2.textProperty().isEmpty());
-     button.disableProperty().bind(booleanBind);
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

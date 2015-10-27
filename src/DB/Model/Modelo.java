@@ -16,6 +16,7 @@ public class Modelo {
     private GestorDb2 _gestor;
     private ResultSet _consulta;
     private ArchivoEntrada archivo;
+    private Analizador analizador;
 
     public static Modelo getInstancia() throws Exception {
         if (instancia == null) {
@@ -23,6 +24,7 @@ public class Modelo {
         }
         instancia._gestor = GestorDb2.getInstancia();
         instancia.archivo = new ArchivoEntrada();
+        instancia.analizador = new Analizador();
         return instancia;
     }
 
@@ -53,7 +55,6 @@ public class Modelo {
 //        System.out.println(archivo.mostarArchivoTexto());
     }
 
-
     public Tabla builtTabla(String nombre) throws SQLException {
         Tabla tabla = new Tabla(nombre);
         _consulta = _gestor.tablaAtributos(nombre);
@@ -63,7 +64,19 @@ public class Modelo {
         return tabla;
     }
 
-//    public String resultado() {
-//        return _gestor.getResultadoConexion();
-//    }
+    public void creaInsert(String tabla) {
+        //inserts del arreglo1
+        int tam = archivo.tamArreglo1();
+        String cadena;
+        for (int i = 0; i < tam; i++) {
+           cadena= analizador.buscaInsert(archivo.obtenerFilaArreglo1(i));
+            System.out.println(i + ". insert into " + tabla + " values (" + cadena + ");");
+        }
+
+    }
+
+    public void actulizarSeparador(char s) {
+        analizador.setSeparador(s);
+    }
+
 }

@@ -24,7 +24,7 @@ public class ArchivoEntrada {
                 cargarTexto(br);
             }
         } catch (Exception e) {
-            System.err.println("Excepcion capturada " + fich.getAbsolutePath() + ": " + e);
+//            System.err.println("Excepcion capturada" + fich.getAbsolutePath() + ": " + e);
         }
     }
 
@@ -72,6 +72,7 @@ public class ArchivoEntrada {
         long total = arreglo1.size() + arreglo2.size() + arreglo3.size()
                 + arreglo4.size() + arreglo5.size();
         System.out.println("Total: " + total);
+//        System.out.println("Mostar Arreglo" + mostarArchivoTexto());
 
     }
 
@@ -79,14 +80,23 @@ public class ArchivoEntrada {
     public String mostarArchivoTexto() {
         StringBuilder s = new StringBuilder();
 
-        arreglo1.stream().forEach((infoArchivo1) -> {
-            s.append(infoArchivo1).append("\n");
+//        for (int i = 1; i < 100; i++) {
+//            s.append("").append(arreglo1.get(i));
+//        }
+        arreglo1.stream().forEach((arreglo11) -> {
+            s.append(arreglo11).append("\n");
         });
-
+//        s.append(arreglo1.get(52));
         return s.toString();
     }
 
+    public String obtenerFilaArreglo1(int pos) {
+        return arreglo1.get(pos);
+    }
+
+    public int tamArreglo1() {
+        return arreglo1.size();
+    }
     private ArrayList<String> arreglo1, arreglo2, arreglo3, arreglo4, arreglo5;
-//    private static ArchivoEntrada instancia;
 
 }

@@ -77,4 +77,5 @@ public class GestorDb2 extends Gestor {
 //        }
 //        d.close(true);
 //    }
+    
 }

@@ -96,19 +96,30 @@ public class VentanaInsertarController implements Initializable {
     @FXML
     public void cargarArchivo() {
         System.out.println("Cargando Datos de Archivo");
-     //   /*
-         //carga el archivo
-         if (_file!=null) {
-         modelo.cargarArchivo(_file);
-         }
-       //  */
-        obtenerSeparador();
+        //   /*
+        //carga el archivo
+        if (_file != null) {
+            modelo.cargarArchivo(_file);
+            modelo.actulizarSeparador(obtenerSeparador());
+            modelo.creaInsert(obtenerTablaSeleccionada());
+//        obtenerTablaSeleccionada();
+        }
+        //  */
+
     }
 
-    public void obtenerSeparador() {
+    public char obtenerSeparador() {
 
         String separador = txtSeparador.getText();
-        System.out.println("Separador: "+ separador);
+        System.out.println("Separador: " + separador.charAt(0));
+        return separador.charAt(0);
+
+    }
+
+    public String obtenerTablaSeleccionada() {
+        String tabla = _comboTablas.getSelectionModel().getSelectedItem().toString();
+        System.out.println("Tabla Seleccionada:  " + tabla);
+        return tabla;
     }
 
     private Db2loader programaPrincipal;
