@@ -14,7 +14,7 @@ public class VentanaUsuarioController implements Initializable {
 
     public VentanaUsuarioController() throws Exception {
         modelo = Modelo.getInstancia();
-        estado = false;
+        estado = false;/*********Aqui es FALSE*/
     }
 
     /*
