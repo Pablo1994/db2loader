@@ -6,7 +6,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController">
     <children>
-        <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="631.0" layoutY="494.0" onAction="#cargarArchivo" text="Cargar Datos" />
+        <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="631.0" layoutY="494.0" onAction="#cargarDatos" text="Cargar Datos" />
 
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
         <AnchorPane layoutY="2.0">
@@ -58,7 +58,7 @@
                 <Pane layoutX="43.0" layoutY="330.0" prefHeight="71.0" prefWidth="367.0">
                     <children>
                         <Label layoutX="14.0" layoutY="27.0" text="Separador" />
-                        <TextField fx:id="txtSeparador"  layoutX="105.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" promptText="Como , * ..." />
+                        <TextField fx:id="txtSeparador" layoutX="105.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" promptText="Como , * ..." />
                     </children>
                 </Pane>
                 <!-- <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="591.0" layoutY="428.0" onAction="#handleButtonAction" text="Cargar Datos" />

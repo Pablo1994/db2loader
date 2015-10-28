@@ -94,22 +94,15 @@ public class VentanaInsertarController implements Initializable {
     }
 
     @FXML
-    public void cargarArchivo() {
-        System.out.println("Cargando Datos de Archivo");
-        //   /*
-        //carga el archivo
+    public void cargarDatos() {
         if (_file != null) {
-            modelo.cargarArchivo(_file);
-            modelo.actulizarSeparador(obtenerSeparador());
-            modelo.creaInsert(obtenerTablaSeleccionada());
-//        obtenerTablaSeleccionada();
+            System.out.println("Cargando Datos de Archivo");
+            System.out.println("Separador: " + obtenerSeparador());
+            System.out.println("Tabla Seleccionada: " + obtenerTablaSeleccionada());
         }
-        //  */
-
     }
 
     public char obtenerSeparador() {
-
         String separador = txtSeparador.getText();
         System.out.println("Separador: " + separador.charAt(0));
         return separador.charAt(0);

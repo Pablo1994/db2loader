@@ -2,7 +2,6 @@ package DB.Model;
 
 import DB.GestorDb2;
 
-import archivo.ArchivoEntrada;
 import java.io.File;
 import Logica.Tabla;
 import java.sql.ResultSet;
@@ -15,7 +14,6 @@ public class Modelo {
     private static Modelo instancia;
     private GestorDb2 _gestor;
     private ResultSet _consulta;
-    private ArchivoEntrada archivo;
     private Analizador analizador;
 
     public static Modelo getInstancia() throws Exception {
@@ -23,7 +21,6 @@ public class Modelo {
             instancia = new Modelo();
         }
         instancia._gestor = GestorDb2.getInstancia();
-        instancia.archivo = new ArchivoEntrada();
         instancia.analizador = new Analizador();
         return instancia;
     }
@@ -50,11 +47,6 @@ public class Modelo {
         return _gestor.conexion();
     }
 
-    public void cargarArchivo(File arch) {
-        archivo.cargarArchivoTexto(arch);
-//        System.out.println(archivo.mostarArchivoTexto());
-    }
-
     public Tabla builtTabla(String nombre) throws SQLException {
         Tabla tabla = new Tabla(nombre);
         _consulta = _gestor.tablaAtributos(nombre);
@@ -62,17 +54,6 @@ public class Modelo {
             tabla.agregarAtributo(_consulta.getString("NAME"), _consulta.getString("COLTYPE"), _consulta.getInt("LENGTH"));
         }
         return tabla;
-    }
-
-    public void creaInsert(String tabla) {
-        //inserts del arreglo1
-        int tam = archivo.tamArreglo1();
-        String cadena;
-        for (int i = 0; i < tam; i++) {
-           cadena= analizador.buscaInsert(archivo.obtenerFilaArreglo1(i));
-            System.out.println(i + ". insert into " + tabla + " values (" + cadena + ");");
-        }
-
     }
 
     public void actulizarSeparador(char s) {
