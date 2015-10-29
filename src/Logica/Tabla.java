@@ -30,7 +30,7 @@ public class Tabla {
     }
 
     public Tipos toType(String tipo) {
-        switch (tipo.toUpperCase()) {
+        switch (tipo.toUpperCase().replaceAll("\\s+","")) {
             case "VARCHAR":
                 return Tipos.VARCHAR;
             case "INTEGER":

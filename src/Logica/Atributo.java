@@ -1,4 +1,3 @@
-
 package Logica;
 
 public class Atributo {

@@ -45,7 +45,7 @@
                 <Pane layoutX="46.0" layoutY="23.0" prefHeight="71.0" prefWidth="361.0">
                     <children>
                         <Label layoutX="35.0" layoutY="27.0" text="Tabla" />
-                        <ComboBox id="_comboTablas" fx:id="_comboTablas" layoutX="115.0" layoutY="23.0" prefWidth="150.0" />
+                        <ComboBox id="_comboTablas" fx:id="_comboTablas" layoutX="115.0" layoutY="23.0" onAction="#cambiarAtributos" prefWidth="150.0" />
                     </children>
                 </Pane>
                 <Pane layoutX="37.0" layoutY="234.0" prefHeight="71.0" prefWidth="361.0">
@@ -61,14 +61,7 @@
                         <TextField fx:id="txtSeparador" layoutX="105.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" promptText="Como , * ..." />
                     </children>
                 </Pane>
-                <!-- <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="591.0" layoutY="428.0" onAction="#handleButtonAction" text="Cargar Datos" />
-                -->
-                <TableView layoutX="59.0" layoutY="109.0" prefHeight="108.0" prefWidth="318.0">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="Atributo" />
-                        <TableColumn prefWidth="75.0" text="Tipo" />
-                    </columns>
-                </TableView>
+            <ListView id="_listaArtributos" fx:id="_listaArtributos" layoutX="102.0" layoutY="115.0" prefHeight="102.0" prefWidth="176.0" />
             </children>
         </Pane>
     </children>

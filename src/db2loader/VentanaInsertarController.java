@@ -1,6 +1,8 @@
 package db2loader;
 
 import DB.Model.Modelo;
+import Logica.Atributo;
+import Logica.Tabla;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
@@ -8,12 +10,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -25,6 +30,7 @@ import javafx.stage.FileChooser;
 public class VentanaInsertarController implements Initializable {
 
     private final Modelo modelo;
+    private static Tabla _tabla;
     private static File _file;
 
     @FXML
@@ -37,9 +43,8 @@ public class VentanaInsertarController implements Initializable {
     TextField _textRuta;
     @FXML
     TextField txtSeparador;
-
     @FXML
-    private TableView tableView;
+    private ListView _listaArtributos;
 
     public VentanaInsertarController() throws Exception {
         modelo = Modelo.getInstancia();
@@ -75,14 +80,34 @@ public class VentanaInsertarController implements Initializable {
         }
     }
 
+    @FXML
+    private void cambiarAtributos() throws SQLException {
+        _listaArtributos.getItems().clear();
+        String actual = _comboTablas.getSelectionModel().getSelectedItem().toString();
+        _tabla = modelo.builtTabla(actual);
+        _tabla.getAtributos().stream().forEach((a) -> {
+            _listaArtributos.getItems().add(a.getNombre());
+        });
+    }
+
     private void cargarTablas() throws Exception {
         List<String> tablas = modelo.listaTablasActuales();
         _comboTablas.getItems().clear();
         tablas.stream().forEach((tabla) -> {
             _comboTablas.getItems().add(tabla);
         });
+
         _comboTablas.getSelectionModel().select(tablas.get(0));
-        cargarAtributos(tablas.get(0));
+
+        _tabla = modelo.builtTabla(tablas.get(0));
+
+        _tabla.getAtributos().stream().forEach((a) -> {
+            _listaArtributos.getItems().add(a.getNombre());
+        });
+
+//        ObservableList<String> items =FXCollections.observableArrayList (
+//    "Single", "Double", "Suite", "Family App");
+//     _listaArtributos.setItems(items);
     }
 
     private void cargarAtributos(String nombre) throws SQLException {

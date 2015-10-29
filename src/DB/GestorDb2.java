@@ -13,7 +13,7 @@ public class GestorDb2 extends Gestor {
             _getTableAtributtes = "SELECT DISTINCT(NAME), COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = ?";
 
     public GestorDb2() throws Exception {
-        super("sample", "50000", "db2admin", "manager", "localhost", "jdbc:db2:");
+        super("sample", "50000", "usuario1", "usuario1", "localhost", "jdbc:db2:");
         getConnection();
     }
 
