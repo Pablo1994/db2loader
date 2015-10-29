@@ -45,6 +45,8 @@ public class VentanaInsertarController implements Initializable {
     TextField txtSeparador;
     @FXML
     private ListView _listaArtributos;
+    @FXML
+    private ListView _listaArtributosSeleccionados;
 
     public VentanaInsertarController() throws Exception {
         modelo = Modelo.getInstancia();
@@ -83,11 +85,23 @@ public class VentanaInsertarController implements Initializable {
     @FXML
     private void cambiarAtributos() throws SQLException {
         _listaArtributos.getItems().clear();
+        _listaArtributosSeleccionados.getItems().clear();
         String actual = _comboTablas.getSelectionModel().getSelectedItem().toString();
         _tabla = modelo.builtTabla(actual);
         _tabla.getAtributos().stream().forEach((a) -> {
-            _listaArtributos.getItems().add(a.getNombre());
+            _listaArtributos.getItems().add(a.getNombre() + " " + a.getTipo().toString());
         });
+    }
+
+    @FXML
+    private void agregarAtributo() {
+        for (Object l : _listaArtributosSeleccionados.getItems()) {
+            if (l.equals(_listaArtributos.getSelectionModel().getSelectedItem().toString())) {
+                return;
+            }
+        }
+        _listaArtributosSeleccionados.getItems().add(_listaArtributos.getSelectionModel().getSelectedItem().toString());
+
     }
 
     private void cargarTablas() throws Exception {
@@ -108,10 +122,6 @@ public class VentanaInsertarController implements Initializable {
 //        ObservableList<String> items =FXCollections.observableArrayList (
 //    "Single", "Double", "Suite", "Family App");
 //     _listaArtributos.setItems(items);
-    }
-
-    private void cargarAtributos(String nombre) throws SQLException {
-
     }
 
     public void setProgramaPrincipal(Db2loader programa) {
