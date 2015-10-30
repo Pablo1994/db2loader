@@ -6,13 +6,13 @@ import java.util.List;
 public class Tabla {
 
     private List<Atributo> _atributos;
-    private List<String> _orden;
+    private List<Atributo> _orden;
     private String _nombre;
 
     public Tabla(String _nombre) {
         this._nombre = _nombre;
         this._atributos = new ArrayList<>();
-        _orden=new ArrayList<>();
+        _orden = new ArrayList<>();
     }
 
     public List<Atributo> getAtributos() {
@@ -32,7 +32,7 @@ public class Tabla {
     }
 
     public Tipos toType(String tipo) {
-        switch (tipo.toUpperCase().replaceAll("\\s+","")) {
+        switch (tipo.toUpperCase().replaceAll("\\s+", "")) {
             case "VARCHAR":
                 return Tipos.VARCHAR;
             case "INTEGER":
@@ -46,14 +46,35 @@ public class Tabla {
         _atributos.add(new Atributo(_nombre, toType(_tipo), tamano));
     }
 
-    public List<String> getOrden() {
+    public List<Atributo> getOrden() {
         return _orden;
     }
 
-    public void setOrden(List<String> _orden) {
-        this._orden = _orden;
+    public void setOrden(List<String> orden) {
+        orden.stream().forEach((s) -> {
+            _orden.add(findAtr(s));
+        });
     }
-    
-    
+
+    public Atributo findAtr(String str) {
+        for (Atributo a : _atributos) {
+            if (str.equals(a.getNombre())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public List<Object> listaLimpia(String[] datos) {
+        List<Object> limpia = new ArrayList<>();
+        for (int i = 0; i < datos.length; i++) {
+            if (_orden.get(i).getParse(datos[i]) != null) {
+                limpia.add(_orden.get(i).getParse(datos[i]));
+            }else{
+            return null;
+            }
+        }
+        return limpia;
+    }
 
 }

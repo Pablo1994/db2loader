@@ -93,18 +93,19 @@ public class VentanaInsertarController implements Initializable {
         String actual = _comboTablas.getSelectionModel().getSelectedItem().toString();
         _tabla = modelo.builtTabla(actual);
         _tabla.getAtributos().stream().forEach((a) -> {
-            _listaArtributos.getItems().add(a.getNombre() + " " + a.getTipo().toString());
+            _listaArtributos.getItems().add(a.getNombre() + "<->" + a.getTipo().toString());
         });
     }
     
     @FXML
     private void agregarAtributo() {
+     String[] split=_listaArtributos.getSelectionModel().getSelectedItem().toString().split("<->");
         for (Object l : _listaArtributosSeleccionados.getItems()) {
-            if (l.equals(_listaArtributos.getSelectionModel().getSelectedItem().toString())) {
+            if (l.equals(split[0])) {
                 return;
             }
         }
-        _listaArtributosSeleccionados.getItems().add(_listaArtributos.getSelectionModel().getSelectedItem().toString());
+        _listaArtributosSeleccionados.getItems().add(split[0]);
         
     }
     
@@ -151,12 +152,8 @@ public class VentanaInsertarController implements Initializable {
         _tabla = modelo.builtTabla(tablas.get(0));
         
         _tabla.getAtributos().stream().forEach((a) -> {
-            _listaArtributos.getItems().add(a.getNombre());
+            _listaArtributos.getItems().add(a.getNombre()+ "<->" + a.getTipo().toString());
         });
-
-//        ObservableList<String> items =FXCollections.observableArrayList (
-//    "Single", "Double", "Suite", "Family App");
-//     _listaArtributos.setItems(items);
     }
     
     public void setProgramaPrincipal(Db2loader programa) {
@@ -173,7 +170,7 @@ public class VentanaInsertarController implements Initializable {
             _tabla.setOrden(ordenSele);
             
             _lector = new Lector(_file, _tabla);
-            _lector.carga(",",1,2);
+            _lector.carga(",");
 //            System.out.println("Cargando Datos de Archivo");
 //            System.out.println("Separador: " + obtenerSeparador());
 //            System.out.println("Tabla Seleccionada: " + obtenerTablaSeleccionada());

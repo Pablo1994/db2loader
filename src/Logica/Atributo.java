@@ -1,6 +1,7 @@
 package Logica;
 
 public class Atributo {
+
     private String _nombre;
     private Tipos _tipo;
     private int _tamano;
@@ -10,7 +11,7 @@ public class Atributo {
         this._nombre = _nombre;
         this._tipo = _tipo;
         this._tamano = _tamano;
-        activo=false;
+        activo = false;
     }
 
     public String getNombre() {
@@ -44,5 +45,25 @@ public class Atributo {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
+
+    public Object getParse(String dato) {
+        dato=dato.replaceAll("\"", "");
+        switch (this._tipo) {
+            case VARCHAR:
+                try {
+                    return dato;
+                } catch (Exception e) {
+                    return null;
+                }
+            case FLOAT:
+                try {
+                    return Float.parseFloat(dato);
+                } catch (Exception e) {
+                    return null;
+                }
+            default:
+                return null;
+        }
+    }
+
 }

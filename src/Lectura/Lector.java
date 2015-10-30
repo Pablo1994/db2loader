@@ -80,21 +80,21 @@ public class Lector extends BufferedReader {
     public void carga(String separador) throws IOException {
         String lineaActual;
         String str = "";
-        int lineNum = 1;
+        int lineNum = 0;
         while ((lineaActual = readLine()) != null) {
+            lineNum++;
             _datos = lineaActual.split(separador);
-            if (_datos.length != _tabla.getOrden().size()) {
+            if (_datos.length != _tabla.getOrden().size() ||_tabla.listaLimpia(_datos)==null) {
                 error(lineNum);
                 return;
             }
             str += lineaActual + '\n';
-            lineNum++;
         }
         System.out.println(str);
     }
 
     private void error(int linea) {
-        JOptionPane.showMessageDialog(null, "El formator No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
