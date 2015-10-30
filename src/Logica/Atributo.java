@@ -4,11 +4,13 @@ public class Atributo {
     private String _nombre;
     private Tipos _tipo;
     private int _tamano;
+    private boolean activo;
 
     public Atributo(String _nombre, Tipos _tipo, int _tamano) {
         this._nombre = _nombre;
         this._tipo = _tipo;
         this._tamano = _tamano;
+        activo=false;
     }
 
     public String getNombre() {
@@ -34,4 +36,13 @@ public class Atributo {
     public void setTamano(int tamano) {
         this._tamano = tamano;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
 }
