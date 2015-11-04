@@ -104,7 +104,9 @@ public class Lector extends BufferedReader {
                 return;
             } else {
                 try {
-                    gestor.insertaRegistro(_datos);
+                    int n = gestor.insertaRegistro(_tabla.listaLimpia(_datos));
+                    gestor.commit();
+                    JOptionPane.showMessageDialog(null, "Registros actualizados: "+n, "Éxito", JOptionPane.PLAIN_MESSAGE);
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
