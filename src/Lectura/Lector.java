@@ -5,25 +5,40 @@
  */
 package Lectura;
 
+import DB.GestorDb2;
 import Logica.Tabla;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Lector extends BufferedReader {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
+    GestorDb2 gestor;
 
     public Lector(FileReader in) {
         super(in);
+        try {
+            this.gestor = GestorDb2.getInstancia();
+        } catch (Exception ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Lector(File in, Tabla _tabla) throws FileNotFoundException {
         super(new FileReader(in));
+        try {
+            this.gestor = GestorDb2.getInstancia();
+        } catch (Exception ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this._tabla = _tabla;
     }
 
@@ -84,9 +99,16 @@ public class Lector extends BufferedReader {
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(separador);
-            if (_datos.length != _tabla.getOrden().size() ||_tabla.listaLimpia(_datos)==null) {
+            if (_datos.length != _tabla.getOrden().size() || _tabla.listaLimpia(_datos) == null) {
                 error(lineNum);
                 return;
+            } else {
+                try {
+                    gestor.insertaRegistro(_datos);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             str += lineaActual + '\n';
         }

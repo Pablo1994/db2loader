@@ -1,17 +1,22 @@
 package DB;
 //jdbc:db2://localhost:50000/sample
 
+import Logica.Atributo;
+import Logica.Tabla;
+import db2loader.VentanaInsertarController;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
+import java.util.List;
 
 public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?",
             _getTableAtributtes = "SELECT DISTINCT(NAME), COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = ?";
-
+    
     public GestorDb2() throws Exception {
         super("sample", "50000", "usuario1", "usuario1", "localhost", "jdbc:db2:");
         getConnection();
@@ -23,6 +28,7 @@ public class GestorDb2 extends Gestor {
     }
 
     public void actualizar(String db, String pt, String usuario, String clave, String h) throws Exception {
+        System.out.print("Actualizando datos conexión");
         getInstancia().database = db;
         getInstancia().puerto = pt;
         getInstancia().user = usuario;
@@ -61,6 +67,32 @@ public class GestorDb2 extends Gestor {
         prepare.setString(1, tabla.toUpperCase());
         return prepare.executeQuery();
     }
+    
+    public int insertaRegistro(String[] datos) throws SQLException {
+        Tabla t = VentanaInsertarController.getTabla();
+        String tabla = t.getNombre();
+        String atributos="";
+        List<Atributo> l = t.getOrden();
+        for (int i = 0; i < l.size();i++) {
+            Atributo a = l.get(i);
+            if(i<l.size()-1)
+                atributos+=a.getNombre()+", ";
+            else 
+                atributos+=a.getNombre();
+        }
+        System.out.println(atributos);
+        String data = "";
+        for(int i = 0; i < datos.length; i++){
+            if(i<datos.length-1)
+                data+=datos[i]+", ";
+            else
+                data+=datos[i];
+        }
+        System.out.println(data);
+        String _insertRow = "INSERT INTO "+tabla+"("+atributos+") VALUES("+data+");";
+        prepare = connection.prepareStatement(_insertRow);
+        return prepare.executeUpdate();
+    }
 
     public static GestorDb2 getInstancia() throws Exception {
         if (instancia == null || instancia.connection.isClosed()) {
@@ -68,6 +100,8 @@ public class GestorDb2 extends Gestor {
         }
         return instancia;
     }
+    
+    
 
 //    public static void main(String[] args) throws Exception {
 //        GestorDb2 d = new GestorDb2();

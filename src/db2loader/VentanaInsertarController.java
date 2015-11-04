@@ -34,6 +34,10 @@ public class VentanaInsertarController implements Initializable {
     
     private final Modelo modelo;
     private static Tabla _tabla;
+
+    public static Tabla getTabla() {
+        return _tabla;
+    }
     private static File _file;
     private Lector _lector;
     
@@ -80,7 +84,7 @@ public class VentanaInsertarController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             cargarTablas();
-            
+            txtSeparador.setText(" ");
         } catch (Exception ex) {
             Logger.getLogger(VentanaInsertarController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,7 +174,7 @@ public class VentanaInsertarController implements Initializable {
             _tabla.setOrden(ordenSele);
             
             _lector = new Lector(_file, _tabla);
-            _lector.carga(",");
+            _lector.carga(txtSeparador.getText());
 //            System.out.println("Cargando Datos de Archivo");
 //            System.out.println("Separador: " + obtenerSeparador());
 //            System.out.println("Tabla Seleccionada: " + obtenerTablaSeleccionada());
