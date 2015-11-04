@@ -68,7 +68,7 @@ public class GestorDb2 extends Gestor {
         return prepare.executeQuery();
     }
     
-    public int insertaRegistro(String[] datos) throws SQLException {
+    public int insertaRegistro(List<Object> datos) throws SQLException {
         Tabla t = VentanaInsertarController.getTabla();
         String tabla = t.getNombre();
         String atributos="";
@@ -82,14 +82,14 @@ public class GestorDb2 extends Gestor {
         }
         System.out.println(atributos);
         String data = "";
-        for(int i = 0; i < datos.length; i++){
-            if(i<datos.length-1)
-                data+=datos[i]+", ";
+        for(int i = 0; i < datos.size(); i++){
+            if(i<datos.size()-1)
+                data+="'"+datos.get(i)+"'"+", ";
             else
-                data+=datos[i];
+                data+="'"+datos.get(i)+"'";
         }
         System.out.println(data);
-        String _insertRow = "INSERT INTO "+tabla+"("+atributos+") VALUES("+data+");";
+        String _insertRow = "INSERT INTO "+tabla+" ("+atributos+") VALUES ("+data+");";
         prepare = connection.prepareStatement(_insertRow);
         return prepare.executeUpdate();
     }
