@@ -7,6 +7,7 @@ package Lectura;
 
 import DB.GestorDb2;
 import Logica.Tabla;
+import db2loader.VentanaEsperaController;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,12 +19,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Lector extends BufferedReader {
+public class Lector extends BufferedReader implements Runnable  {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
     private List<Object> _listaLimpia;
     private GestorDb2 gestor;
+    private HiloEspera _espera;
+    private String _hilera;
 
     public Lector(FileReader in) {
         super(in);
@@ -34,10 +37,11 @@ public class Lector extends BufferedReader {
         }
     }
 
-    public Lector(File in, Tabla _tabla) throws FileNotFoundException {
+    public Lector(File in, Tabla _tabla,String _hilera) throws FileNotFoundException {
         super(new FileReader(in));
         try {
             this.gestor = GestorDb2.getInstancia();
+            this._hilera=_hilera;
         } catch (Exception ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,12 +98,13 @@ public class Lector extends BufferedReader {
         System.out.println(str);
     }
 
-    public void carga(String separador) throws Exception {
+    public void carga() throws Exception {
         String lineaActual;
         int lineNum = 0;
+
         while ((lineaActual = readLine()) != null) {
             lineNum++;
-            _datos = lineaActual.split(separador);
+            _datos = lineaActual.split(_hilera);
             _listaLimpia = _tabla.listaLimpia(_datos);
             if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
                     || _listaLimpia == null ||  //parseo de Datos
@@ -109,6 +114,8 @@ public class Lector extends BufferedReader {
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
+                    VentanaEsperaController.getEspera_insta().getTxtLinea().setText(String.valueOf(lineNum));
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -130,6 +137,15 @@ public class Lector extends BufferedReader {
     @Override
     public String toString() {
         return "";
+    }
+
+    @Override
+    public void run() {
+        try {
+            carga();
+        } catch (Exception ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

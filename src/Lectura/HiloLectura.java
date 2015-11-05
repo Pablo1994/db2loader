@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 public class HiloLectura extends Thread {
 
     private Lector _lector;
-    private String _separador;
+ 
 
     public HiloLectura(File in, Tabla _tabla, String _separador) throws FileNotFoundException {
-        this._lector = new Lector(in, _tabla);
-        this._separador = _separador;
+        this._lector = new Lector(in, _tabla,_separador);
+
     }
 
     @Override
@@ -26,7 +26,7 @@ public class HiloLectura extends Thread {
     }
 
     private void callLector() throws Exception {
-        _lector.carga(_separador);
+        _lector.run();
     }
 
 }
