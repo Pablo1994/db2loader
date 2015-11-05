@@ -94,34 +94,37 @@ public class Lector extends BufferedReader {
         System.out.println(str);
     }
 
-    public void carga(String separador) throws IOException {
+    public void carga(String separador) throws Exception {
         String lineaActual;
-        String str = "";
         int lineNum = 0;
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(separador);
-            _listaLimpia=_tabla.listaLimpia(_datos);
-            if (_datos.length != _tabla.getOrden().size() || _listaLimpia== null ||!_tabla.lengthCheck(_listaLimpia)) {
+            _listaLimpia = _tabla.listaLimpia(_datos);
+            if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
+                    || _listaLimpia == null ||  //parseo de Datos
+                    !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
+            {
                 error(lineNum);
-                return;
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
-//                    JOptionPane.showMessageDialog(null, "Registros actualizados: "+n, "Éxito", JOptionPane.PLAIN_MESSAGE);
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            str += lineaActual + '\n';
         }
         gestor.commit();
-        System.out.println(str);
+        success("Se ha leido: " + lineNum + " líneas");
     }
 
     private void error(int linea) {
         JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void success(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

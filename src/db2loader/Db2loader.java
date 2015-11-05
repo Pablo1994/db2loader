@@ -1,6 +1,7 @@
 package db2loader;
 
 import java.io.File;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -50,6 +51,18 @@ public class Db2loader extends Application {
         }
     }
 
+    public void crearVentanaEspera() throws IOException {
+        FXMLLoader loader = new FXMLLoader(Db2loader.class.getResource("VentanaEspera.fxml"));
+        rootPane = (AnchorPane) loader.load();
+        Scene scene = new Scene(rootPane);
+        stagePrincipal.setTitle("Espere...");
+        stagePrincipal.setScene(scene);
+        stagePrincipal.setResizable(false);
+        controlEspera = loader.getController();
+        controlEspera.setProgramaPrincipal(this);
+        stagePrincipal.show();
+    }
+
     public File buscarArchivo() {
 
         FileChooser fileChooser = new FileChooser();
@@ -67,11 +80,10 @@ public class Db2loader extends Application {
     public Stage getStagePrincipal() {
         return stagePrincipal;
     }
-    
-    public void desabilitarBoton(Button btn){
-       
+
+    public void desabilitarBoton(Button btn) {
+
     }
-    
 
     public static void main(String[] args) {
         launch(args);
@@ -92,5 +104,6 @@ public class Db2loader extends Application {
 //    private Stage usuario;
     private VentanaUsuarioController controlUsuario;
     private VentanaInsertarController controlInsertar;
+    private VentanaEsperaController controlEspera;
     private AnchorPane rootPane;
 }

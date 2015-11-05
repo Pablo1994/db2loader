@@ -1,6 +1,7 @@
 package db2loader;
 
 import DB.Model.Modelo;
+import Lectura.HiloLectura;
 import Lectura.Lector;
 import Logica.Atributo;
 import Logica.Tabla;
@@ -34,6 +35,7 @@ public class VentanaInsertarController implements Initializable {
     
     private final Modelo modelo;
     private static Tabla _tabla;
+    private HiloLectura _hiloLectura;
 
     public static Tabla getTabla() {
         return _tabla;
@@ -173,8 +175,11 @@ public class VentanaInsertarController implements Initializable {
             });
             _tabla.setOrden(ordenSele);
             
-            _lector = new Lector(_file, _tabla);
-            _lector.carga(txtSeparador.getText());
+            programaPrincipal.crearVentanaEspera();
+            _hiloLectura=new HiloLectura(_file, _tabla, txtSeparador.getText());
+            _hiloLectura.start();
+//            _lector = new Lector(_file, _tabla);
+//            _lector.carga(txtSeparador.getText());
 //            System.out.println("Cargando Datos de Archivo");
 //            System.out.println("Separador: " + obtenerSeparador());
 //            System.out.println("Tabla Seleccionada: " + obtenerTablaSeleccionada());

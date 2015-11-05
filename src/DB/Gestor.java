@@ -46,9 +46,10 @@ public abstract class Gestor {
 
     }
 
-    public void commit() {
+    public void commit() throws Exception {
         try {
             connection.commit();
+            getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
         }

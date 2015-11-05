@@ -131,30 +131,4 @@ public class GestorDb2 extends Gestor {
         return instancia;
     }
 
-    public void guardar() throws SQLException {
-        prepare = connection.prepareStatement("INSERT INTO TEMPERATURA (N20_49, N250_499) VALUES (?,?)");
-        prepare.setString(1, "01");
-        prepare.setString(2, "001");
-//        prepare.setString(3, articulo);
-//        prepare.setString(4, provedor);
-//        prepare.setString(5, nombre);
-//        prepare.setString(6, bodega);
-//        prepare.setFloat(7, cantidad);
-        prepare.executeUpdate();
-//    this.update("INSERT INTO TEMPERATURA (N20_49, N250_499) VALUES ('01', '001')");
-    }
-
-//    public static void main(String[] args)  {
-//        GestorDb2 d;
-//        try {
-//            d = new GestorDb2();
-//             d.guardar();
-//        } catch (Exception ex) {
-//            Logger.getLogger(GestorDb2.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        ResultSet result = d.tablasActuales();
-//        while (result.next()) {
-//            System.out.println(result.getString("TABLE_NAME"));
-//        }
-//        d.close(true);
 }
