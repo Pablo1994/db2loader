@@ -76,6 +76,17 @@ public class Db2loader extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+//        public static void main(String[] args)  {
+//        GestorDb2 d;
+//        try {
+//            d = new GestorDb2();
+//             d.guardar();
+//             d.close(false);
+//             System.exit(0);
+//        } catch (Exception ex) {
+//            Logger.getLogger(GestorDb2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        }
 
     private Stage stagePrincipal;
 //    private Stage usuario;

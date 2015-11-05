@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,7 +22,8 @@ public class Lector extends BufferedReader {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
-    GestorDb2 gestor;
+    private List<Object> _listaLimpia;
+    private GestorDb2 gestor;
 
     public Lector(FileReader in) {
         super(in);
@@ -99,14 +101,14 @@ public class Lector extends BufferedReader {
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(separador);
-            if (_datos.length != _tabla.getOrden().size() || _tabla.listaLimpia(_datos) == null) {
+            _listaLimpia=_tabla.listaLimpia(_datos);
+            if (_datos.length != _tabla.getOrden().size() || _listaLimpia== null ||!_tabla.lengthCheck(_listaLimpia)) {
                 error(lineNum);
                 return;
             } else {
                 try {
-                    int n = gestor.insertaRegistro(_tabla.listaLimpia(_datos));
-                    gestor.commit();
-                    JOptionPane.showMessageDialog(null, "Registros actualizados: "+n, "Éxito", JOptionPane.PLAIN_MESSAGE);
+                    int n = gestor.insertaRegistro(_listaLimpia);
+//                    JOptionPane.showMessageDialog(null, "Registros actualizados: "+n, "Éxito", JOptionPane.PLAIN_MESSAGE);
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -114,6 +116,7 @@ public class Lector extends BufferedReader {
             }
             str += lineaActual + '\n';
         }
+        gestor.commit();
         System.out.println(str);
     }
 

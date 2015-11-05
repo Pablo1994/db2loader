@@ -51,6 +51,7 @@ public class Tabla {
     }
 
     public void setOrden(List<String> orden) {
+        _orden = new ArrayList<>();
         orden.stream().forEach((s) -> {
             _orden.add(findAtr(s));
         });
@@ -70,11 +71,21 @@ public class Tabla {
         for (int i = 0; i < datos.length; i++) {
             if (_orden.get(i).getParse(datos[i]) != null) {
                 limpia.add(_orden.get(i).getParse(datos[i]));
-            }else{
-            return null;
+            } else {
+                return null;
             }
         }
         return limpia;
+    }
+
+
+    public boolean lengthCheck(List<Object> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (_orden.get(i).getTamano() < lista.get(i).toString().length()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

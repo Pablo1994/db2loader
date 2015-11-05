@@ -1,8 +1,5 @@
 package DB.Model;
-
 import DB.GestorDb2;
-
-import java.io.File;
 import Logica.Tabla;
 import java.sql.ResultSet;
 import java.sql.SQLException;
