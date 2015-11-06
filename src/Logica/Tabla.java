@@ -37,6 +37,42 @@ public class Tabla {
                 return Tipos.VARCHAR;
             case "INTEGER":
                 return Tipos.INTEGER;
+            case "FLOAT":
+                return Tipos.FLOAT;
+            case "DOUBLE":
+                return Tipos.DOUBLE;
+            case "TIMESTAMP":
+                return Tipos.TIMESTAMP;
+            case "DATE":
+                return Tipos.DATE;
+            case "BIGINT":
+                return Tipos.BIGINT;
+            case "BINARY":
+                return Tipos.BINARY;
+            case "BLOB":
+                return Tipos.BLOB;
+            case "CHARACTER":
+                return Tipos.CHARACTER;
+            case "CLOB":
+                return Tipos.CLOB;
+            case "DBCLOB":
+                return Tipos.DBCLOB;
+            case "DECIMAL":
+                return Tipos.DECIMAL;
+            case "GRAPHIC":
+                return Tipos.GRAPHIC;
+            case "REAL":
+                return Tipos.REAL;
+            case "SMALLINT":
+                return Tipos.SMALLINT;
+            case "TIME":
+                return Tipos.TIME;
+            case "VARBINARY":
+                return Tipos.VARBINARY;
+            case "VARGRAPHIC":
+                return Tipos.VARGRAPHIC;
+            case "CHAR":
+                return Tipos.CHAR;
             default:
                 return null;
         }
@@ -77,7 +113,6 @@ public class Tabla {
         }
         return limpia;
     }
-
 
     public boolean lengthCheck(List<Object> lista) {
         for (int i = 0; i < lista.size(); i++) {
