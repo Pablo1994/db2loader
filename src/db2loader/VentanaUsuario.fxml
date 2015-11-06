@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -19,5 +20,9 @@
       <Button fx:id="btnProbar" layoutX="41.0" layoutY="247.0" mnemonicParsing="false" onAction="#obtenerParametros" prefHeight="33.0" prefWidth="90.0" text="Probar" />
       <Button fx:id="bntAceptar" layoutX="159.0" layoutY="247.0" mnemonicParsing="false" onAction="#ventanaInsertar" prefHeight="33.0" prefWidth="90.0" text="Aceptar" />
       <Label fx:id="labelResult" layoutX="41.0" layoutY="305.0" prefHeight="33.0" prefWidth="145.0" text="  Estado: Sin Conexion" textAlignment="CENTER" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="416.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/Logo.png" />
+         </image></ImageView>
     </children>
 </AnchorPane>

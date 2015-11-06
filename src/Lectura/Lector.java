@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Lector extends BufferedReader implements Runnable  {
+public class Lector extends BufferedReader implements Runnable {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
@@ -37,11 +37,11 @@ public class Lector extends BufferedReader implements Runnable  {
         }
     }
 
-    public Lector(File in, Tabla _tabla,String _hilera) throws FileNotFoundException {
+    public Lector(File in, Tabla _tabla, String _hilera) throws FileNotFoundException {
         super(new FileReader(in));
         try {
             this.gestor = GestorDb2.getInstancia();
-            this._hilera=_hilera;
+            this._hilera = _hilera;
         } catch (Exception ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,19 +106,24 @@ public class Lector extends BufferedReader implements Runnable  {
             lineNum++;
             _datos = lineaActual.split(_hilera);
             _listaLimpia = _tabla.listaLimpia(_datos);
+
             if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
-                    || _listaLimpia == null ||  //parseo de Datos
+                    || _listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
-                error(lineNum);
+
+                try {
+                    int errores = Integer.parseInt(VentanaEsperaController.getEspera_insta().getTxtErrores().getText());
+//                    VentanaEsperaController.getEspera_insta().getTxtErrores().setText(String.valueOf(++errores));
+                } catch (Exception e) {
+                }
+
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
-                    VentanaEsperaController.getEspera_insta().getTxtLinea().setText(String.valueOf(lineNum));
-                    
+//                    VentanaEsperaController.getEspera_insta().getTxtLinea().setText(String.valueOf(lineNum));
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

@@ -20,7 +20,7 @@ public class VentanaEsperaController implements Initializable {
        _txtLinea.setText("0");
        _txtErrores.setText("0");
        _txtTiempo.setText("0");
-       _espera_insta=this;
+//       _espera_insta=this;
     }
 
     public VentanaEsperaController() {

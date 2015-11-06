@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -100,6 +101,11 @@
                </children>
             </Pane>
               <Button fx:id="button" alignment="BOTTOM_RIGHT" blendMode="DIFFERENCE" contentDisplay="BOTTOM" layoutX="549.0" layoutY="428.0" onAction="#cargarDatos" text="Cargar Datos" />
+            <ImageView fitHeight="94.0" fitWidth="200.0" layoutX="533.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Logo.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
     </children>
