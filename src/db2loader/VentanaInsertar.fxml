@@ -16,21 +16,12 @@
                     <children>
                         <Pane>
                             <children>
-                                <MenuBar blendMode="DIFFERENCE" prefHeight="25.0" prefWidth="717.0">
+                                <MenuBar blendMode="DIFFERENCE" onDragDetected="#salir" prefHeight="25.0" prefWidth="717.0">
                                     <menus>
                                         <Menu mnemonicParsing="false" text="Archivo">
                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Close" />
-                                            </items>
-                                        </Menu>
-                                        <Menu mnemonicParsing="false" text="Edit">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="Delete" />
-                                            </items>
-                                        </Menu>
-                                        <Menu mnemonicParsing="false" text="Help">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="About" />
+                                                <MenuItem mnemonicParsing="false" text="Regresar "  onAction="#back"/>
+                                    <MenuItem mnemonicParsing="false" text="Salir" onAction="#salir" />
                                             </items>
                                         </Menu>
                                     </menus>

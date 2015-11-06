@@ -24,5 +24,15 @@
          <image>
             <Image url="@../imagenes/Logo.png" />
          </image></ImageView>
+      <MenuBar layoutX="4.0" layoutY="2.0" prefHeight="25.0" prefWidth="594.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#back" text="Regresar" />
+                  <MenuItem id="_salir" mnemonicParsing="false" onAction="#salir" text="Salir" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
     </children>
 </AnchorPane>

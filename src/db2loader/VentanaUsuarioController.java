@@ -1,6 +1,7 @@
 package db2loader;
 
 import DB.Model.Modelo;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -59,7 +60,15 @@ public class VentanaUsuarioController implements Initializable {
         }
 
     }
-
+  @FXML
+    public void salir() {
+        programaPrincipal.salir();
+    }
+    
+      @FXML
+    public void back() throws IOException {
+        programaPrincipal.crearBienvenida();
+    }
     private Db2loader programaPrincipal;
     private final Modelo modelo;
     private boolean estado;

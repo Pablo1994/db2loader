@@ -59,7 +59,10 @@ public class VentanaEsperaController implements Initializable {
     public static VentanaEsperaController getEspera_insta() {
         return _espera_insta;
     }
-    
+      @FXML
+    public void salir() {
+        programaPrincipal.salir();
+    }
     
     
     private Db2loader programaPrincipal;

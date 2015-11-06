@@ -7,6 +7,7 @@ package Lectura;
 
 import DB.GestorDb2;
 import Logica.Tabla;
+import db2loader.Db2loader;
 import db2loader.VentanaEsperaController;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Lector extends BufferedReader implements Runnable {
+public final class Lector extends BufferedReader implements Runnable {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
@@ -28,14 +29,14 @@ public class Lector extends BufferedReader implements Runnable {
     private HiloEspera _espera;
     private String _hilera;
 
-    public Lector(FileReader in) {
-        super(in);
-        try {
-            this.gestor = GestorDb2.getInstancia();
-        } catch (Exception ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public Lector(FileReader in) {
+//        super(in);
+//        try {
+//            this.gestor = GestorDb2.getInstancia();
+//        } catch (Exception ex) {
+//            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public Lector(File in, Tabla _tabla, String _hilera) throws FileNotFoundException {
         super(new FileReader(in));
@@ -98,7 +99,7 @@ public class Lector extends BufferedReader implements Runnable {
         System.out.println(str);
     }
 
-    public void carga() throws Exception {
+    public synchronized void carga() throws Exception {
         String lineaActual;
         int lineNum = 0;
 
@@ -113,15 +114,15 @@ public class Lector extends BufferedReader implements Runnable {
             {
 
                 try {
-                    int errores = Integer.parseInt(VentanaEsperaController.getEspera_insta().getTxtErrores().getText());
-//                    VentanaEsperaController.getEspera_insta().getTxtErrores().setText(String.valueOf(++errores));
+//                    aumentaErrores();
+
                 } catch (Exception e) {
                 }
 
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
-//                    VentanaEsperaController.getEspera_insta().getTxtLinea().setText(String.valueOf(lineNum));
+//                    aumentaLinea(lineNum);
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -137,6 +138,15 @@ public class Lector extends BufferedReader implements Runnable {
 
     private void success(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private synchronized void aumentaErrores() {
+        int errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
+        Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(++errores));
+    }
+
+    private synchronized void aumentaLinea(int lineNum) {
+        Db2loader.getControlEspera().getTxtLinea().setText(String.valueOf(lineNum));
     }
 
     @Override

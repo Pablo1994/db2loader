@@ -1,15 +1,18 @@
 package db2loader;
 
+import DB.GestorDb2;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -20,9 +23,16 @@ public class Db2loader extends Application {
     @Override
     public void start(Stage principal) throws Exception {
         this.stagePrincipal = principal;
-//        stagePrincipal.getIcons().add(new Image("..\\imagenes\\Logo.png"));
-        
-        crearVentanaUsuario();
+        Platform.setImplicitExit(false);
+
+ this.stagePrincipal.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    @Override
+    public void handle(WindowEvent event) {
+        event.consume();
+    }
+});
+
+        crearBienvenida();
     }
 
     public void crearVentanaUsuario() {
@@ -53,6 +63,10 @@ public class Db2loader extends Application {
         } catch (Exception e) {
         }
     }
+    
+    public void salir(){
+    System.exit(0);
+    }
 
     public void crearVentanaEspera() throws IOException {
         FXMLLoader loader = new FXMLLoader(Db2loader.class.getResource("VentanaEspera.fxml"));
@@ -63,6 +77,18 @@ public class Db2loader extends Application {
         stagePrincipal.setResizable(false);
         controlEspera = loader.getController();
         controlEspera.setProgramaPrincipal(this);
+        stagePrincipal.show();
+    }
+    
+    public void crearBienvenida() throws IOException{
+       FXMLLoader loader = new FXMLLoader(Db2loader.class.getResource("VentanaBienvenida.fxml"));
+        rootPane = (AnchorPane) loader.load();
+        Scene scene = new Scene(rootPane);
+        stagePrincipal.setTitle("Bienvenido");
+        stagePrincipal.setScene(scene);
+        stagePrincipal.setResizable(false);
+        controBienvenida = loader.getController();
+        controBienvenida.setProgramaPrincipal(this);
         stagePrincipal.show();
     }
 
@@ -103,10 +129,21 @@ public class Db2loader extends Application {
 //        }
 //        }
 
+    public static VentanaEsperaController getControlEspera() {
+        return controlEspera;
+    }
+
+    public static void setControlEspera(VentanaEsperaController controlEspera) {
+        Db2loader.controlEspera = controlEspera;
+    }
+
+    
     private Stage stagePrincipal;
 //    private Stage usuario;
     private VentanaUsuarioController controlUsuario;
     private VentanaInsertarController controlInsertar;
-    private VentanaEsperaController controlEspera;
+    private static VentanaEsperaController controlEspera;
+    
+    private VentanaBienvenidaController controBienvenida;
     private AnchorPane rootPane;
 }
