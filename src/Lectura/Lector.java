@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public final class Lector extends BufferedReader implements Runnable {
+public final class Lector extends BufferedReader {
 
     private Tabla _tabla; //Logica de la tabla
     private String[] _datos;
@@ -113,8 +113,7 @@ public final class Lector extends BufferedReader implements Runnable {
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
 
-                try {
-//                    aumentaErrores();
+                try {                   aumentaErrores();
 
                 } catch (Exception e) {
                 }
@@ -122,13 +121,14 @@ public final class Lector extends BufferedReader implements Runnable {
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
-//                    aumentaLinea(lineNum);
+                    aumentaLinea(lineNum);
                 } catch (SQLException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         gestor.commit();
+         Db2loader.getControlEspera().finalizado();
         success("Se ha leido: " + lineNum + " líneas");
     }
 
@@ -154,13 +154,13 @@ public final class Lector extends BufferedReader implements Runnable {
         return "";
     }
 
-    @Override
-    public void run() {
-        try {
-            carga();
-        } catch (Exception ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    @Override
+//    public void run() {
+//        try {
+//            carga();
+//        } catch (Exception ex) {
+//            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
 }

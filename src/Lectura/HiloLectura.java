@@ -16,17 +16,17 @@ public class HiloLectura extends Thread {
 
     }
 
-    @Override
-    public void run() {
-        try {
-            callLector();
-        } catch (Exception ex) {
-            Logger.getLogger(HiloLectura.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void callLector() throws Exception {
-        _lector.run();
-    }
+//    @Override
+//    public void run() {
+//        try {
+//            callLector();
+//        } catch (Exception ex) {
+//            Logger.getLogger(HiloLectura.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
+//    private void callLector() throws Exception {
+//        _lector.run();
+//    }
 
 }

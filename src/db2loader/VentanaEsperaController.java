@@ -1,9 +1,12 @@
 package db2loader;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 
 public class VentanaEsperaController implements Initializable {
@@ -14,13 +17,17 @@ public class VentanaEsperaController implements Initializable {
     private  TextField _txtErrores;
     @FXML
     private  TextField _txtTiempo;
+     @FXML
+    private Button _aceptar;
+       @FXML
+    private ProgressBar _progreso;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        _txtLinea.setText("0");
        _txtErrores.setText("0");
        _txtTiempo.setText("0");
-//       _espera_insta=this;
+     _aceptar.setDisable(true);
     }
 
     public VentanaEsperaController() {
@@ -62,6 +69,24 @@ public class VentanaEsperaController implements Initializable {
       @FXML
     public void salir() {
         programaPrincipal.salir();
+    }
+    
+       @FXML
+    public void fin() throws IOException {
+        programaPrincipal.crearBienvenida();
+    }
+
+    public Button getAceptar() {
+        return _aceptar;
+    }
+
+    public void setAceptar(Button _aceptar) {
+        this._aceptar = _aceptar;
+    }
+    
+    public void finalizado(){
+        _progreso.setProgress(100);
+        _aceptar.setDisable(false);
     }
     
     

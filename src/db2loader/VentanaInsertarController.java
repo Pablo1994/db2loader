@@ -171,10 +171,11 @@ public class VentanaInsertarController implements Initializable {
             _tabla.setOrden(ordenSele);
             
             programaPrincipal.crearVentanaEspera();
-            _hiloLectura=new HiloLectura(_file, _tabla, txtSeparador.getText());
-            _hiloLectura.start();
-//            _lector = new Lector(_file, _tabla);
-//            _lector.carga(txtSeparador.getText());
+//            _hiloLectura=new HiloLectura(_file, _tabla, txtSeparador.getText());
+//            _hiloLectura.start();
+           Lector _lector;
+            _lector = new Lector(_file, _tabla,txtSeparador.getText());
+            _lector.carga();
 //            System.out.println("Cargando Datos de Archivo");
 //            System.out.println("Separador: " + obtenerSeparador());
 //            System.out.println("Tabla Seleccionada: " + obtenerTablaSeleccionada());
