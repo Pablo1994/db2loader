@@ -37,7 +37,6 @@ public final class Lector extends BufferedReader {
 //            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
     public Lector(File in, Tabla _tabla, String _hilera) throws FileNotFoundException {
         super(new FileReader(in));
         try {
@@ -106,18 +105,20 @@ public final class Lector extends BufferedReader {
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(_hilera);
-            _listaLimpia = _tabla.listaLimpia(_datos);
+            //Ojo acá, no se puede hacer el listaLimpia si los dos arreglos no son del mismo tamaño, porque tira una excepción que tenemos que controlar desde antes.
+            if (_datos.length != _tabla.getOrden().size()) // misma cantidad de atributos
+            {
+                _listaLimpia = _tabla.listaLimpia(_datos);
+            }
 
-            if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
-                    || _listaLimpia == null || //parseo de Datos
+            if (_listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
-
-                try {                   aumentaErrores();
-
+                try {
+                    aumentaErrores();
                 } catch (Exception e) {
+                    
                 }
-
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
@@ -126,10 +127,15 @@ public final class Lector extends BufferedReader {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
         }
+
         gestor.commit();
-         Db2loader.getControlEspera().finalizado();
-        success("Se ha leido: " + lineNum + " líneas");
+
+        Db2loader.getControlEspera()
+                .finalizado();
+        success(
+                "Se ha leido: " + lineNum + " líneas");
     }
 
     private void error(int linea) {
@@ -162,5 +168,4 @@ public final class Lector extends BufferedReader {
 //            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
 }

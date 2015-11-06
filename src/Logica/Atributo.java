@@ -1,5 +1,7 @@
 package Logica;
 
+import java.util.Arrays;
+
 public class Atributo {
 
     private String _nombre;
@@ -59,6 +61,13 @@ public class Atributo {
                 try {
                     return Float.parseFloat(dato);
                 } catch (Exception e) {
+                    return null;
+                }
+            case INTEGER:
+                try{
+                    return Integer.parseInt(dato);
+                } catch (Exception e){
+                    System.err.print(Arrays.toString(e.getStackTrace()));
                     return null;
                 }
             default:
