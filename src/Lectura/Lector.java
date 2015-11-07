@@ -6,6 +6,7 @@
 package Lectura;
 
 import DB.GestorDb2;
+import Logica.Atributo;
 import Logica.Tabla;
 import db2loader.Db2loader;
 import db2loader.VentanaEsperaController;
@@ -176,7 +177,12 @@ public final class Lector extends BufferedReader {
         System.out.println("Archivo de errores: "+this.errFile+"\n\n");
         
         System.out.println("Tabla "+_tabla.getNombre()+"\n");
-        
+        System.out.println("Columna\t\t\t\t\tTipo");
+        System.out.println("-------\t\t\t\t\t----");
+        _tabla.getAtributos().stream().forEach((a) -> {
+            System.out.println(a.getNombre()+"\t\t\t\t\t"+a.getTipo());
+        });
+        System.out.println("-----------------");
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(_hilera);

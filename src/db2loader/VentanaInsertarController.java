@@ -82,7 +82,7 @@ public class VentanaInsertarController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             cargarTablas();
-            txtSeparador.setText(" ");
+            //txtSeparador.setText(" ");
         } catch (Exception ex) {
             Logger.getLogger(VentanaInsertarController.class.getName()).log(Level.SEVERE, null, ex);
         }

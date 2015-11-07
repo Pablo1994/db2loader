@@ -84,7 +84,7 @@ public class GestorDb2 extends Gestor {
                 atributos += a.getNombre();
             }
         }
-        System.out.println(atributos);
+        //System.out.println(atributos);
         String data = "";
         for (int i = 0; i < datos.size(); i++) {
             if (i < datos.size() - 1) {
@@ -93,7 +93,7 @@ public class GestorDb2 extends Gestor {
                 data += "'" + datos.get(i) + "'";
             }
         }
-        System.out.println(data);
+        //System.out.println(data);
         String _insertRow = "INSERT INTO " + tabla + " (" + atributos + ") VALUES (" + builtValues(datos) + ")";
         return builtPrepare(datos, _insertRow);
 
