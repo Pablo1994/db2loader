@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<updateDescriptor baseUrl="">
-  <entry targetMediaFileId="22" updatableVersionMin="" updatableVersionMax="" fileName="DB2Loader_windows-x64_1_0.exe" newVersion="1.0" newMediaFileId="22" fileSize="34772480" bundledJre="" archive="false">
-    <comment language="es" />
-    <comment language="en" />
-  </entry>
-</updateDescriptor>
