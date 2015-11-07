@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -174,7 +175,12 @@ public class VentanaInsertarController implements Initializable {
 //            _hiloLectura=new HiloLectura(_file, _tabla, txtSeparador.getText());
 //            _hiloLectura.start();
            Lector _lector;
-            _lector = new Lector(_file, _tabla,txtSeparador.getText());
+           String fileS = _file.getName();
+           Date d = new Date();
+           
+           String out = _file.getPath()+"_Carga_"+String.valueOf(d.getTime())+".log";
+           String err = _file.getPath()+"_Carga_"+String.valueOf(d.getTime())+".err";
+            _lector = new Lector(_file, out, err, _tabla,txtSeparador.getText());
             _lector.carga();
 //            System.out.println("Cargando Datos de Archivo");
 //            System.out.println("Separador: " + obtenerSeparador());

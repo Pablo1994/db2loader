@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,6 +29,8 @@ public final class Lector extends BufferedReader {
     private GestorDb2 gestor;
     private HiloEspera _espera;
     private String _hilera;
+    private String outFile;
+    private String errFile;
 
 //    public Lector(FileReader in) {
 //        super(in);
@@ -44,6 +47,24 @@ public final class Lector extends BufferedReader {
             this._hilera = _hilera;
         } catch (Exception ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this._tabla = _tabla;
+    }
+
+    public Lector(File in, String out, String err, Tabla _tabla, String _hilera) throws FileNotFoundException {
+        super(new FileReader(in));
+        try {
+            this.gestor = GestorDb2.getInstancia();
+            this._hilera = _hilera;
+            this.outFile = out;
+            this.errFile = err;
+            File fOut = new File(out);
+            File fErr = new File(err);
+            System.setOut(new PrintStream(fOut));
+            System.setErr(new PrintStream(fErr));
+        } catch (Exception ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.print(ex.getMessage());
         }
         this._tabla = _tabla;
     }
@@ -137,23 +158,22 @@ public final class Lector extends BufferedReader {
 //        success(
 //                "Se ha leido: " + lineNum + " líneas");
 //    }
-    
-       public synchronized void carga() throws Exception {
+    public synchronized void carga() throws Exception {
         String lineaActual;
         int lineNum = 0;
 
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(_hilera);
-            _listaLimpia = _tabla.listaLimpia(_datos);
+            if (_datos.length == _tabla.getOrden().size()) // misma cantidad de atributos
+                _listaLimpia = _tabla.listaLimpia(_datos);
 
-            if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
-                    || _listaLimpia == null || //parseo de Datos
+            if ( _listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
-
-                try {                   aumentaErrores();
-
+                try {
+                    aumentaErrores();
+                    error(lineNum);
                 } catch (Exception e) {
                 }
 
@@ -168,13 +188,14 @@ public final class Lector extends BufferedReader {
         }
         gestor.exceuteBatch();
         gestor.commit();
-         Db2loader.getControlEspera().finalizado();
+        Db2loader.getControlEspera().finalizado();
+        System.out.print("Se han leido: " + lineNum + " líneas");
         success("Se ha leido: " + lineNum + " líneas");
     }
 
-
     private void error(int linea) {
-        JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
+        System.err.println("El formato no se cumple. Línea: " + linea);
+        //JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void success(String msg) {
