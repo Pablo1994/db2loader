@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -225,7 +226,9 @@ public final class Lector extends BufferedReader {
             }
         } catch (SQLException ex) {
             ex.forEach(e -> {
-                System.err.println(e.getMessage());
+                if(errores>1){
+                    System.err.println(e.getMessage());   
+                }
                 aumentaErrores();
             });
             disminuyeErrores();
