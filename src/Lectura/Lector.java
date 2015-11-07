@@ -106,12 +106,12 @@ public final class Lector extends BufferedReader {
             lineNum++;
             _datos = lineaActual.split(_hilera);
             //Ojo acá, no se puede hacer el listaLimpia si los dos arreglos no son del mismo tamaño, porque tira una excepción que tenemos que controlar desde antes.
-            if (_datos.length != _tabla.getOrden().size()) // misma cantidad de atributos
-            {
-                _listaLimpia = _tabla.listaLimpia(_datos);
-            }
+//            if (_datos.length != _tabla.getOrden().size()) // misma cantidad de atributos
+//            {
+//                _listaLimpia = _tabla.listaLimpia(_datos);
+//            }
 
-            if (_listaLimpia == null || //parseo de Datos
+            if (_datos.length != _tabla.getOrden().size() || _listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
                 try {
