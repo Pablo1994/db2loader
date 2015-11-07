@@ -16,6 +16,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +34,9 @@ public final class Lector extends BufferedReader {
     private String _hilera;
     private String outFile;
     private String errFile;
-
+    private String nombreArchivo;
+    private int errores;
+    private int inserciones;
 //    public Lector(FileReader in) {
 //        super(in);
 //        try {
@@ -58,6 +63,7 @@ public final class Lector extends BufferedReader {
             this._hilera = _hilera;
             this.outFile = out;
             this.errFile = err;
+            this.nombreArchivo = in.getName();
             File fOut = new File(out);
             File fErr = new File(err);
             System.setOut(new PrintStream(fOut));
@@ -79,7 +85,7 @@ public final class Lector extends BufferedReader {
             lineNum++;
         }
 
-        System.out.println(str);
+        //System.out.println(str);
 
     }
 
@@ -98,7 +104,7 @@ public final class Lector extends BufferedReader {
             }
             lineNum++;
         }
-        System.out.println(str);
+        //System.out.println(str);
     }
 
     public void carga(String separador, int inicio) throws IOException {
@@ -116,7 +122,7 @@ public final class Lector extends BufferedReader {
             }
             lineNum++;
         }
-        System.out.println(str);
+        //System.out.println(str);
     }
 
 //    public synchronized void carga() throws Exception {
@@ -161,27 +167,44 @@ public final class Lector extends BufferedReader {
     public synchronized void carga() throws Exception {
         String lineaActual;
         int lineNum = 0;
-
+        Date d = new Date();
+        DateFormat df = new SimpleDateFormat("EEE dd MMM,yyyy HH:mm:ss");
+        String inicio = df.format(d);
+        
+        System.out.println("Carga del archivo: "+this.nombreArchivo+"\n");
+        System.out.println("Archivo de log: "+this.outFile);
+        System.out.println("Archivo de errores: "+this.errFile+"\n\n");
+        
+        System.out.println("Tabla "+_tabla.getNombre()+"\n");
+        
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(_hilera);
             if (_datos.length == _tabla.getOrden().size()) // misma cantidad de atributos
+            {
                 _listaLimpia = _tabla.listaLimpia(_datos);
+            }
 
-            if ( _listaLimpia == null || //parseo de Datos
+            if (_listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
-                try {
-                    aumentaErrores();
-                    error(lineNum);
-                } catch (Exception e) {
+                aumentaErrores();
+                error(lineNum);
+                String str="";
+                for (int i = 0; i < _datos.length; i++) {
+                    if (i < _datos.length - 1) {
+                        str += "'" + _datos[i] + "'" + ", ";
+                    } else {
+                        str += "'" + _datos[i] + "'";
+                    }
                 }
-
+                System.err.println(str);
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
                     aumentaLinea(lineNum);
                 } catch (SQLException ex) {
+                    aumentaErrores();
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -189,12 +212,17 @@ public final class Lector extends BufferedReader {
         gestor.exceuteBatch();
         gestor.commit();
         Db2loader.getControlEspera().finalizado();
-        System.out.print("Se han leido: " + lineNum + " líneas");
+        String tFinal = df.format(new Date());
+        System.out.println("Se han leido: " + lineNum + " líneas");
+        System.out.println("Registros insertados: "+inserciones);
+        System.out.println("Errores: "+errores+"\n");
+        System.out.println("Iniciado en: "+inicio);
+        System.out.println("Finalizado en: "+tFinal);
         success("Se ha leido: " + lineNum + " líneas");
     }
 
     private void error(int linea) {
-        System.err.println("El formato no se cumple. Línea: " + linea);
+        System.out.println("El formato no se cumple. Línea: " + linea);
         //JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
@@ -203,11 +231,12 @@ public final class Lector extends BufferedReader {
     }
 
     private synchronized void aumentaErrores() {
-        int errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
+        errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
         Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(++errores));
     }
 
     private synchronized void aumentaLinea(int lineNum) {
+        inserciones+=1;
         Db2loader.getControlEspera().getTxtLinea().setText(String.valueOf(lineNum));
     }
 
