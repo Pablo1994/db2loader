@@ -1,0 +1,3 @@
+# List of generated media files. The columns are tab-separated:
+# id | media file type | display name | media file path
+22	windows	Windows	C:\Users\Pablo\Documents\Administración de Bases de Datos\db2loader\executable\DB2Loader_windows-x64_1_0.exe
