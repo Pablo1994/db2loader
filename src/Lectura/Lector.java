@@ -211,6 +211,21 @@ public final class Lector extends BufferedReader {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
                     aumentaLinea(lineNum);
+                    int[] ins = {};
+                    if (lineNum%10000==0) {
+                        try {
+                            gestor.exceuteBatch();    
+                            gestor.commit();
+                        } catch (SQLException ex) {
+                            ex.forEach(e -> {
+                                if (errores > 1) {
+                                    System.err.println(e.getMessage());
+                                }
+                                aumentaErrores();
+                            });
+                            disminuyeErrores();
+                        }
+                    }
                 } catch (SQLException ex) {
                     aumentaErrores();
                     System.err.println(str);
@@ -233,25 +248,24 @@ public final class Lector extends BufferedReader {
             });
             disminuyeErrores();
         }
-            gestor.commit();
+        gestor.commit();
 
-            Db2loader.getControlEspera()
-                    .finalizado();
-            String tFinal = df.format(new Date());
+        Db2loader.getControlEspera()
+                .finalizado();
+        String tFinal = df.format(new Date());
 
-            System.out.println(
-                    "Se han leido: " + lineNum + " líneas");
-            System.out.println(
-                    "Registros insertados: " + inserciones);
-            System.out.println(
-                    "Errores: " + errores + "\n");
-            System.out.println(
-                    "Iniciado en: " + inicio);
-            System.out.println(
-                    "Finalizado en: " + tFinal);
-            success(
-                    "Se ha leido: " + lineNum + " líneas");
-        
+        System.out.println(
+                "Se han leido: " + lineNum + " líneas");
+        System.out.println(
+                "Registros insertados: " + inserciones);
+        System.out.println(
+                "Errores: " + errores + "\n");
+        System.out.println(
+                "Iniciado en: " + inicio);
+        System.out.println(
+                "Finalizado en: " + tFinal);
+        success(
+                "Se ha leido: " + lineNum + " líneas");
 
     }
 
@@ -268,7 +282,7 @@ public final class Lector extends BufferedReader {
         errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
         Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(++errores));
     }
-    
+
     private synchronized void disminuyeErrores() {
         errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
         Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(--errores));

@@ -132,6 +132,7 @@ public class GestorDb2 extends Gestor {
     public int[] exceuteBatch() throws SQLException {
         int[] i = prepare.executeBatch();
         insertando = false;
+        prepare.clearBatch();
         return i;
     }
 
