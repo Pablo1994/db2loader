@@ -185,6 +185,7 @@ public final class Lector extends BufferedReader {
         });
         System.out.println("-----------------");
         while ((lineaActual = readLine()) != null) {
+            VentanaEsperaController.getEspera_insta().getTxtLinea().setText(String.valueOf(lineNum));
             lineNum++;
             _datos = lineaActual.split(_hilera);
             if (_datos.length == _tabla.getOrden().size()) // misma cantidad de atributos
@@ -215,7 +216,7 @@ public final class Lector extends BufferedReader {
                     if (lineNum%10000==0) {
                         try {
                             gestor.exceuteBatch();    
-                            gestor.commit();
+                            //gestor.commit();
                         } catch (SQLException ex) {
                             ex.forEach(e -> {
                                 if (errores > 1) {
@@ -248,11 +249,19 @@ public final class Lector extends BufferedReader {
             });
             disminuyeErrores();
         }
-        gestor.commit();
+        //gestor.commit();
 
         Db2loader.getControlEspera()
                 .finalizado();
-        String tFinal = df.format(new Date());
+        Date dfin = new Date();
+        String tFinal = df.format(dfin);
+        
+        long diff = d.getTime() - dfin.getTime();
+        long diffSeconds = diff / 1000 % 60;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000);
+        
+        String elapsedTime = diffHours+":"+-diffMinutes+":"+-diffSeconds;
 
         System.out.println(
                 "Se han leido: " + lineNum + " líneas");
@@ -264,8 +273,9 @@ public final class Lector extends BufferedReader {
                 "Iniciado en: " + inicio);
         System.out.println(
                 "Finalizado en: " + tFinal);
-        success(
-                "Se ha leido: " + lineNum + " líneas");
+        System.out.println("Tiempo Transcurrido: "+elapsedTime);
+        VentanaEsperaController.getEspera_insta().getTxtTiempo().setText(elapsedTime);
+        //success("Se ha leido: " + lineNum + " líneas");
 
     }
 

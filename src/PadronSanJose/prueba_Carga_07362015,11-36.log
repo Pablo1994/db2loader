@@ -1,0 +1,25 @@
+Carga del archivo: prueba.txt
+
+Archivo de log: C:\Users\Pablo\Documents\Administración de Bases de Datos\db2loader\src\PadronSanJose\prueba_Carga_07362015,11-36.log
+Archivo de errores: C:\Users\Pablo\Documents\Administración de Bases de Datos\db2loader\src\PadronSanJose\prueba_Carga_07362015,11-36.err
+
+
+Tabla PADRON
+
+Columna					Tipo
+-------					----
+APELLIDO1					VARCHAR
+APELLIDO2					VARCHAR
+CEDULA					VARCHAR
+CODELEC					VARCHAR
+FECHACADUC					VARCHAR
+JUNTA					INTEGER
+NOMBRE					VARCHAR
+SEXO					VARCHAR
+-----------------
+Se han leido: 14500 líneas
+Registros insertados: 14500
+Errores: 14500
+
+Iniciado en: sáb 07 nov,2015 11:36:05
+Finalizado en: sáb 07 nov,2015 11:36:10

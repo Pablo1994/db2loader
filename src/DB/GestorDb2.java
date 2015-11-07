@@ -49,7 +49,7 @@ public class GestorDb2 extends Gestor {
                     + ":user=" + user + ";password=" + password + ";"
                     + "traceLevel="
                     + (com.ibm.db2.jcc.DB2BaseDataSource.TRACE_ALL) + ";");
-            connection.setAutoCommit(false); // set auto-commit false
+            //connection.setAutoCommit(false); // set auto-commit false
             statement = (Statement) connection.createStatement();
             return true;
         } catch (Exception e) {
