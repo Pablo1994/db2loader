@@ -3,7 +3,7 @@
 
 #define MyAppName "DB2 Loader"
 #define MyAppVersion "1.0"
-#define MyAppPublisher "AAEJP"
+#define MyAppPublisher "AAEJP UNA"
 #define MyAppURL "https://github.com/Pablo1994/db2loader"
 #define MyAppExeName "DB2Loader.exe"
 

@@ -237,9 +237,6 @@ public final class Lector extends BufferedReader {
         int[] ins = {};
         try {
             ins = gestor.exceuteBatch();
-            for (int i = 0; i < ins.length; i++) {
-                System.err.print(ins[i] + ", ");
-            }
         } catch (SQLException ex) {
             ex.forEach(e -> {
                 if(errores>1){
