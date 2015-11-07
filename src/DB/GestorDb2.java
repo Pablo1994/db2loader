@@ -129,9 +129,10 @@ public class GestorDb2 extends Gestor {
         return 1;
     }
 
-    public void exceuteBatch() throws SQLException {
-        prepare.executeBatch();
+    public int[] exceuteBatch() throws SQLException {
+        int[] i = prepare.executeBatch();
         insertando = false;
+        return i;
     }
 
     public static GestorDb2 getInstancia() throws Exception {

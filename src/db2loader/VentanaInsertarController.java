@@ -7,6 +7,8 @@ import Logica.Tabla;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -177,9 +179,9 @@ public class VentanaInsertarController implements Initializable {
            Lector _lector;
            String fileS = _file.getName();
            Date d = new Date();
-           
-           String out = _file.getPath()+"_Carga_"+String.valueOf(d.getTime())+".log";
-           String err = _file.getPath()+"_Carga_"+String.valueOf(d.getTime())+".err";
+            DateFormat df = new SimpleDateFormat("dd/mm/YYYY hh:mm");
+           String out = _file.getPath()+"_Carga_"+df.format(d.getTime())+".log";
+           String err = _file.getPath()+"_Carga_"+df.format(d.getTime())+".err";
             _lector = new Lector(_file, out, err, _tabla,txtSeparador.getText());
             _lector.carga();
 //            System.out.println("Cargando Datos de Archivo");

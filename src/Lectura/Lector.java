@@ -190,13 +190,7 @@ public final class Lector extends BufferedReader {
             {
                 _listaLimpia = _tabla.listaLimpia(_datos);
             }
-
-            if (_listaLimpia == null || //parseo de Datos
-                    !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
-            {
-                aumentaErrores();
-                error(lineNum);
-                String str="";
+            String str="";
                 for (int i = 0; i < _datos.length; i++) {
                     if (i < _datos.length - 1) {
                         str += "'" + _datos[i] + "'" + ", ";
@@ -204,6 +198,13 @@ public final class Lector extends BufferedReader {
                         str += "'" + _datos[i] + "'";
                     }
                 }
+
+            if (_listaLimpia == null || //parseo de Datos
+                    !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
+            {
+                aumentaErrores();
+                error(lineNum);
+                
                 System.err.println(str);
             } else {
                 try {
@@ -211,11 +212,20 @@ public final class Lector extends BufferedReader {
                     aumentaLinea(lineNum);
                 } catch (SQLException ex) {
                     aumentaErrores();
+                    System.err.println(str);
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-        gestor.exceuteBatch();
+        int [] ins={};
+        try{
+        ins = gestor.exceuteBatch();
+        } catch(SQLException ex){
+            aumentaErrores();
+            for(int i = 0; i<ins.length;i++){
+                System.err.print(ins[i]+", ");
+            }
+        }
         gestor.commit();
         Db2loader.getControlEspera().finalizado();
         String tFinal = df.format(new Date());
