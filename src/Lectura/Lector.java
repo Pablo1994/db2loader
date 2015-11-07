@@ -98,27 +98,65 @@ public final class Lector extends BufferedReader {
         System.out.println(str);
     }
 
-    public synchronized void carga() throws Exception {
+//    public synchronized void carga() throws Exception {
+//        String lineaActual;
+//        int lineNum = 0;
+//
+//        while ((lineaActual = readLine()) != null) {
+//            lineNum++;
+//            _datos = lineaActual.split(_hilera);
+//            //Ojo acá, no se puede hacer el listaLimpia si los dos arreglos no son del mismo tamaño, porque tira una excepción que tenemos que controlar desde antes.
+////            if (_datos.length != _tabla.getOrden().size()) // misma cantidad de atributos
+////            {
+////                _listaLimpia = _tabla.listaLimpia(_datos);
+////            }
+//
+//            if (_datos.length != _tabla.getOrden().size() || _listaLimpia == null || //parseo de Datos
+//                    !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
+//            {
+//                try {
+//                    aumentaErrores(); 
+//                } catch (Exception e) {
+//                    
+//                }
+//            } else {
+//                try {
+//                    int n = gestor.insertaRegistro(_listaLimpia);
+//                    aumentaLinea(lineNum);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//
+//        }
+////gestor.exceuteBatch();
+//        gestor.commit();
+//        
+//        Db2loader.getControlEspera()
+//                .finalizado();
+//        success(
+//                "Se ha leido: " + lineNum + " líneas");
+//    }
+    
+       public synchronized void carga() throws Exception {
         String lineaActual;
         int lineNum = 0;
 
         while ((lineaActual = readLine()) != null) {
             lineNum++;
             _datos = lineaActual.split(_hilera);
-            //Ojo acá, no se puede hacer el listaLimpia si los dos arreglos no son del mismo tamaño, porque tira una excepción que tenemos que controlar desde antes.
-//            if (_datos.length != _tabla.getOrden().size()) // misma cantidad de atributos
-//            {
-//                _listaLimpia = _tabla.listaLimpia(_datos);
-//            }
+            _listaLimpia = _tabla.listaLimpia(_datos);
 
-            if (_datos.length != _tabla.getOrden().size() || _listaLimpia == null || //parseo de Datos
+            if (_datos.length != _tabla.getOrden().size() // misma cantidad de atributos
+                    || _listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
-                try {
-                    aumentaErrores();
+
+                try {                   aumentaErrores();
+
                 } catch (Exception e) {
-                    
                 }
+
             } else {
                 try {
                     int n = gestor.insertaRegistro(_listaLimpia);
@@ -127,16 +165,13 @@ public final class Lector extends BufferedReader {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         }
-
+        gestor.exceuteBatch();
         gestor.commit();
-
-        Db2loader.getControlEspera()
-                .finalizado();
-        success(
-                "Se ha leido: " + lineNum + " líneas");
+         Db2loader.getControlEspera().finalizado();
+        success("Se ha leido: " + lineNum + " líneas");
     }
+
 
     private void error(int linea) {
         JOptionPane.showMessageDialog(null, "El formato No se Cumple Linea: " + linea, "Error", JOptionPane.ERROR_MESSAGE);

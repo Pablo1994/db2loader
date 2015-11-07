@@ -8,25 +8,25 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GestorDb2 extends Gestor {
 
     private static GestorDb2 instancia;
+    private boolean insertando;
     private static final String _getTables = "SELECT TABLE_NAME FROM CAT WHERE TABLE_TYPE='TABLE' AND TABLE_SCHEMA=?",
             _getTableAtributtes = "SELECT DISTINCT(NAME), COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = ?";
 
     public GestorDb2() throws Exception {
         super("sample", "50000", "usuario1", "usuario1", "localhost", "jdbc:db2:");
         getConnection();
+        insertando = false;
     }
 
     public GestorDb2(String database, String puerto, String user, String password, String host, String url) throws Exception {
         super(database, puerto, user, password, host, url);
         getConnection();
+        insertando = false;
     }
 
     public void actualizar(String db, String pt, String usuario, String clave, String h) throws Exception {
@@ -71,6 +71,7 @@ public class GestorDb2 extends Gestor {
     }
 
     public int insertaRegistro(List<Object> datos) throws SQLException {
+
         Tabla t = VentanaInsertarController.getTabla();
         String tabla = t.getNombre();
         String atributos = "";
@@ -94,7 +95,7 @@ public class GestorDb2 extends Gestor {
         }
         System.out.println(data);
         String _insertRow = "INSERT INTO " + tabla + " (" + atributos + ") VALUES (" + builtValues(datos) + ")";
-        return builtPrepare(datos,_insertRow);
+        return builtPrepare(datos, _insertRow);
 
     }
 
@@ -111,7 +112,10 @@ public class GestorDb2 extends Gestor {
     }
 
     private int builtPrepare(List<Object> datos, String query) throws SQLException {
-        prepare = connection.prepareStatement(query);
+        if (!insertando) {
+            prepare = connection.prepareStatement(query);
+            insertando = true;
+        }
         for (int i = 0; i < datos.size(); i++) {
             if (datos.get(i) instanceof Integer) {
                 prepare.setInt((i + 1), Integer.parseInt(datos.get(i).toString()));
@@ -121,7 +125,13 @@ public class GestorDb2 extends Gestor {
                 prepare.setString((i + 1), datos.get(i).toString());
             }
         }
-       return  prepare.executeUpdate();
+        prepare.addBatch();
+        return 1;
+    }
+
+    public void exceuteBatch() throws SQLException {
+        prepare.executeBatch();
+        insertando = false;
     }
 
     public static GestorDb2 getInstancia() throws Exception {

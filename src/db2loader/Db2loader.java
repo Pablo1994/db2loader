@@ -1,6 +1,5 @@
 package db2loader;
 
-import DB.GestorDb2;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
