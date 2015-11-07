@@ -179,9 +179,9 @@ public class VentanaInsertarController implements Initializable {
            Lector _lector;
            String fileS = _file.getName();
            Date d = new Date();
-            DateFormat df = new SimpleDateFormat("dd/mm/YYYY hh:mm");
-           String out = _file.getPath()+"_Carga_"+df.format(d.getTime())+".log";
-           String err = _file.getPath()+"_Carga_"+df.format(d.getTime())+".err";
+            DateFormat df = new SimpleDateFormat("ddmmYYYY,hh-mm");
+           String out = _file.getPath().substring(0, _file.getPath().length()-4)+"_Carga_"+df.format(d.getTime())+".log";
+           String err = _file.getPath().substring(0, _file.getPath().length()-4)+"_Carga_"+df.format(d.getTime())+".err";
             _lector = new Lector(_file, out, err, _tabla,txtSeparador.getText());
             _lector.carga();
 //            System.out.println("Cargando Datos de Archivo");

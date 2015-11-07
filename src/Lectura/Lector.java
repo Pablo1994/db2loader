@@ -46,6 +46,7 @@ public final class Lector extends BufferedReader {
 //            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
     public Lector(File in, Tabla _tabla, String _hilera) throws FileNotFoundException {
         super(new FileReader(in));
         try {
@@ -87,7 +88,6 @@ public final class Lector extends BufferedReader {
         }
 
         //System.out.println(str);
-
     }
 
     public void carga(String separador, int inicio, int fin) throws IOException {
@@ -171,16 +171,16 @@ public final class Lector extends BufferedReader {
         Date d = new Date();
         DateFormat df = new SimpleDateFormat("EEE dd MMM,yyyy HH:mm:ss");
         String inicio = df.format(d);
-        
-        System.out.println("Carga del archivo: "+this.nombreArchivo+"\n");
-        System.out.println("Archivo de log: "+this.outFile);
-        System.out.println("Archivo de errores: "+this.errFile+"\n\n");
-        
-        System.out.println("Tabla "+_tabla.getNombre()+"\n");
+
+        System.out.println("Carga del archivo: " + this.nombreArchivo + "\n");
+        System.out.println("Archivo de log: " + this.outFile);
+        System.out.println("Archivo de errores: " + this.errFile + "\n\n");
+
+        System.out.println("Tabla " + _tabla.getNombre() + "\n");
         System.out.println("Columna\t\t\t\t\tTipo");
         System.out.println("-------\t\t\t\t\t----");
         _tabla.getAtributos().stream().forEach((a) -> {
-            System.out.println(a.getNombre()+"\t\t\t\t\t"+a.getTipo());
+            System.out.println(a.getNombre() + "\t\t\t\t\t" + a.getTipo());
         });
         System.out.println("-----------------");
         while ((lineaActual = readLine()) != null) {
@@ -190,21 +190,21 @@ public final class Lector extends BufferedReader {
             {
                 _listaLimpia = _tabla.listaLimpia(_datos);
             }
-            String str="";
-                for (int i = 0; i < _datos.length; i++) {
-                    if (i < _datos.length - 1) {
-                        str += "'" + _datos[i] + "'" + ", ";
-                    } else {
-                        str += "'" + _datos[i] + "'";
-                    }
+            String str = "";
+            for (int i = 0; i < _datos.length; i++) {
+                if (i < _datos.length - 1) {
+                    str += "'" + _datos[i] + "'" + ", ";
+                } else {
+                    str += "'" + _datos[i] + "'";
                 }
+            }
 
             if (_listaLimpia == null || //parseo de Datos
                     !_tabla.lengthCheck(_listaLimpia)) // tamaño de los datos
             {
                 aumentaErrores();
                 error(lineNum);
-                
+
                 System.err.println(str);
             } else {
                 try {
@@ -217,24 +217,39 @@ public final class Lector extends BufferedReader {
                 }
             }
         }
-        int [] ins={};
-        try{
-        ins = gestor.exceuteBatch();
-        } catch(SQLException ex){
-            aumentaErrores();
-            for(int i = 0; i<ins.length;i++){
-                System.err.print(ins[i]+", ");
+        int[] ins = {};
+        try {
+            ins = gestor.exceuteBatch();
+            for (int i = 0; i < ins.length; i++) {
+                System.err.print(ins[i] + ", ");
             }
+        } catch (SQLException ex) {
+            ex.forEach(e -> {
+                System.err.println(e.getMessage());
+                aumentaErrores();
+            });
+            disminuyeErrores();
         }
-        gestor.commit();
-        Db2loader.getControlEspera().finalizado();
-        String tFinal = df.format(new Date());
-        System.out.println("Se han leido: " + lineNum + " líneas");
-        System.out.println("Registros insertados: "+inserciones);
-        System.out.println("Errores: "+errores+"\n");
-        System.out.println("Iniciado en: "+inicio);
-        System.out.println("Finalizado en: "+tFinal);
-        success("Se ha leido: " + lineNum + " líneas");
+            gestor.commit();
+
+            Db2loader.getControlEspera()
+                    .finalizado();
+            String tFinal = df.format(new Date());
+
+            System.out.println(
+                    "Se han leido: " + lineNum + " líneas");
+            System.out.println(
+                    "Registros insertados: " + inserciones);
+            System.out.println(
+                    "Errores: " + errores + "\n");
+            System.out.println(
+                    "Iniciado en: " + inicio);
+            System.out.println(
+                    "Finalizado en: " + tFinal);
+            success(
+                    "Se ha leido: " + lineNum + " líneas");
+        
+
     }
 
     private void error(int linea) {
@@ -250,9 +265,14 @@ public final class Lector extends BufferedReader {
         errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
         Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(++errores));
     }
+    
+    private synchronized void disminuyeErrores() {
+        errores = Integer.parseInt(Db2loader.getControlEspera().getTxtErrores().getText());
+        Db2loader.getControlEspera().getTxtErrores().setText(String.valueOf(--errores));
+    }
 
     private synchronized void aumentaLinea(int lineNum) {
-        inserciones+=1;
+        inserciones += 1;
         Db2loader.getControlEspera().getTxtLinea().setText(String.valueOf(lineNum));
     }
 
