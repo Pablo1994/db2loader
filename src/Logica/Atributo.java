@@ -49,7 +49,7 @@ public class Atributo {
     }
 
     public Object getParse(String dato) {
-        dato=dato.replaceAll("\"", "");
+        dato=dato.trim().replaceAll("\"", "");
         switch (this._tipo) {
             case VARCHAR:
                 try {
