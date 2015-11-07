@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController">
+<AnchorPane stylesheets="@css/main.css" id="AnchorPane" prefHeight="533.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaInsertarController" styleClass="background">
     <children>
 
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />

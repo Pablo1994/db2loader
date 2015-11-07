@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaBienvenidaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaBienvenidaController">
    <children>
-      <TabPane blendMode="GREEN" layoutX="51.0" layoutY="70.0" prefHeight="311.0" prefWidth="512.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane blendMode="COLOR_BURN" layoutX="51.0" layoutY="70.0" prefHeight="311.0" prefWidth="512.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Db2Loader">
             <content>
@@ -33,24 +33,19 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="427.0">
                      <children>
-                        <ImageView fitHeight="95.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imagenes/Logo.png" />
-                           </image>
-                        </ImageView>
-                        <Pane layoutX="111.0" layoutY="22.0" prefHeight="238.0" prefWidth="370.0">
+                        <Pane layoutX="50.0" layoutY="14.0" prefHeight="238.0" prefWidth="370.0">
                            <children>
                               <TextArea editable="false" layoutX="22.0" layoutY="77.0" prefHeight="100.0" prefWidth="200.0" text="Pablo Arias Zúñiga&#10;Adrián Hernández Sánchez&#10;Josué Loría Guevara&#10;Errol Santamaría Herrera&#10;Alonso Villanueva Naranjo">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </TextArea>
-                              <Label layoutX="29.0" layoutY="49.0" prefHeight="20.0" prefWidth="125.0" text="Realizado Por">
+                              <Label layoutX="123.0" layoutY="46.0" prefHeight="20.0" prefWidth="125.0" text="Realizado Por" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="91.0" layoutY="14.0" text="Administración Bases de Datos">
+                              <Label layoutX="84.0" layoutY="14.0" text="Administración Bases de Datos" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -60,6 +55,11 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
+                              <ImageView fitHeight="95.0" fitWidth="107.0" layoutX="235.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/Logo.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </Pane>
                      </children>
@@ -68,12 +68,12 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="202.0" layoutY="33.0" text="Bienvenido A DB2Loader">
+      <Label layoutX="202.0" layoutY="33.0" text="Bienvenido A DB2Loader" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+      <MenuBar blendMode="DIFFERENCE" layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
@@ -88,4 +88,5 @@
         </menus>
       </MenuBar>
    </children>
+ 
 </AnchorPane>

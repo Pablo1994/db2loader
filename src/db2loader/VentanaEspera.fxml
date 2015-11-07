@@ -7,10 +7,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="313.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaEsperaController">
+<AnchorPane id="AnchorPane" prefHeight="313.0" prefWidth="539.0" styleClass="background" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="db2loader.VentanaEsperaController">
    <children>
       <ProgressBar fx:id="_progreso" layoutX="64.0" layoutY="198.0" prefHeight="31.0" prefWidth="423.0" />
-      <Label layoutX="174.0" layoutY="23.0" prefHeight="31.0" prefWidth="159.0" text="Espere Por favor !">
+      <Label layoutX="190.0" layoutY="22.0" prefHeight="31.0" prefWidth="159.0" text="Espere Por favor !" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -30,13 +30,16 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="101.0" layoutY="154.0" text="Tiempo Transcurrido :" textFill="#242dd3">
+      <Label layoutX="101.0" layoutY="154.0" text="Tiempo Transcurrido :" textFill="#1f2365">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <TextField id="_txtErrores" fx:id="_txtErrores" editable="false" layoutX="275.0" layoutY="107.0" prefHeight="30.0" prefWidth="106.0" />
       <TextField id="_txtTiempo" fx:id="_txtTiempo" editable="false" layoutX="275.0" layoutY="152.0" prefHeight="30.0" prefWidth="106.0" />
-      <Button fx:id="_aceptar" defaultButton="true" layoutX="353.0" layoutY="265.0" mnemonicParsing="false" onAction="#fin" prefHeight="25.0" prefWidth="134.0" text="Aceptar" />
+      <Button fx:id="_aceptar" defaultButton="true" layoutX="353.0" layoutY="265.0" mnemonicParsing="false" onAction="#fin" prefHeight="25.0" prefWidth="134.0" text="Aceptar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>
